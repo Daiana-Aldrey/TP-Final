@@ -16,6 +16,7 @@
             <button onclick="location.href ='vender.html'">Quiero vender </button>
         </div>
      </section>
+
      <p>Aqui podras vender tu celular o comprar uno nuevo de catalogo en solo 2 clics</p>
      <h3>MARCAS DISPONIBLES</h3>
      <ul>
@@ -23,6 +24,9 @@
         <li>Apple</li>
         <li>xiaomi</li>
      </ul>
+
+    <ul id = "lista">
+    </ul>
      <footer>        
         <p> Este sitio web es únicamente para propósitos educativos. La información proporcionada 
             aquí no debe ser considerada como asesoramiento profesional. Nos esforzamos por mantener 
@@ -35,6 +39,8 @@
         function mostrar_datos(datos){
             console.log("Exito")
             console.log(datos)
+
+            return datos.json()
         }
 
         function mostrar_error(error){
@@ -44,6 +50,12 @@
 
         function parse_datos(contenido){
             console.log(contenido)
+           const lista = document.getElementById("lista")
+            for(let indice = 0; indice < contenido.length; indice ++){
+                const elemento = document.createElement("li")
+                elemento.append(contenido[indice].modelo)
+                lista.append(elemento)
+            }
         }
 
         fetch("http://localhost:5000/celulares/") // el fetch es como cun curl que hace una request a lo que se le pasa
