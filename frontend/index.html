@@ -29,5 +29,29 @@
             la información actualizada y precisa, pero no garantizamos su integridad ni 
             exactitud. El uso de este sitio web está sujeto a nuestros términos y condiciones.</p>
     </footer>
+
+    <script>
+
+        function mostrar_datos(datos){
+            console.log("Exito")
+            console.log(datos)
+        }
+
+        function mostrar_error(error){
+            console.log("Error")
+            console.log(error)
+        }
+
+        function parse_datos(contenido){
+            console.log(contenido)
+        }
+
+        fetch("http://localhost:5000/celulares/") // el fetch es como cun curl que hace una request a lo que se le pasa
+            .then(mostrar_datos) //proporciona informacion del request
+            .then(parse_datos) // recibe el contenido del request
+            .catch(mostrar_error)  // si algo sale mal el catch ejecuta la funcion de adentro
+
+    </script>   
+
 </body>
 </html>
