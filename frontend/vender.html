@@ -3,9 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>venta</title>
+    <title>vende tu usado</title>
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
-    
+    <header>
+    <h1>VENDE TU USADO</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">volver a pagina de inicio</a></li>
+            <li><a href="comprar.html">comprar nuevo</a></li>
+        </ul>
+    </nav>
+    </header>
+    <main>
+        <h2>formulario de venta</h2>
+        <form id="vender_form">
+
+        <label for="categoria">Categoria:</label>
+        <select name="categoria disponibles" id="categoria" required>
+            <option value="celular">celular</option>
+            <option value="tablet">tablet</option>
+            <option value="computador">computador</option>
+        </select>
+
+        <label for="marca">Marca:</label>
+        <select name="marca disponibles" id="marca" required>
+            <option value="xiaomi">xiaomi</option>
+            <option value="Samsumg">samsung</option>
+            <option value="Apple">apple</option>
+        </select>
+        
+        <label for="modelo">modelo: </label>
+        <input type="text" id="modelo" name="modelo">
+
+        <label for="precio">precio: </label>
+        <input type="number" id="precio" name="precio">
+
+        <label for="descripcion">modelo: </label>
+        <input type="text" id="descripcion" nombre="descripcion">
+
+        <label for="foto">foto del dispositivo: </label>
+        <input type="file" id="foto" nombre="foto" accept="image/*" required> // se aceptan unicamente archivos de tipo img
+
+        <button type="submit">enviar</button>
+        </form>
+        <div id="mensaje-exito" style="display: none;">¡publicado!</div>
+
+    </main>
+
+    <script> src="js/script.js"</script>
 </body>
 </html>
