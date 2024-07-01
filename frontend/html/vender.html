@@ -3,64 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vende tu usado</title>
+    <title>Vende tu usado</title>
     <link rel="stylesheet" href="../css/pagina_vender.css">
-
 </head>
 <body>
     <header>
-    <h1>VENDE TU USADO</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">volver a pagina de inicio</a></li>
-            <li><a href="comprar.html">comprar nuevo</a></li>
-        </ul>
-    </nav>
+        <h1>VENDE TU USADO</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Volver a página de inicio</a></li>
+                <li><a href="comprar.html">Comprar nuevo</a></li>
+            </ul>
+        </nav>
     </header>
+
+    <div id="mensaje-exito" style="display: none;">¡Publicado!</div>
+
     <main>
-        <h2>formulario de venta</h2>
+        <h2>Formulario de venta</h2>
         <form id="vender_form" onsubmit="return mostrarMensaje()">
+            <label for="categoria">Categoría:</label>
+            <select name="categoria" id="categoria" required>
+                <option value="celular">Celular</option>
+                <option value="tablet">Tablet</option>
+                <option value="computador">Computador</option>
+            </select>
 
-        <label for="categoria">Categoria:</label>
-        <select name="categoria disponibles" id="categoria" required>
-            <option value="celular">celular</option>
-            <option value="tablet">tablet</option>
-            <option value="computador">computador</option>
-        </select>
+            <label for="marca">Marca:</label>
+            <select name="marca" id="marca" required>
+                <option value="xiaomi">Xiaomi</option>
+                <option value="samsung">Samsung</option>
+                <option value="apple">Apple</option>
+            </select>
+            
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo">
 
-        <label for="marca">Marca:</label>
-        <select name="marca disponibles" id="marca" required>
-            <option value="xiaomi">xiaomi</option>
-            <option value="Samsumg">samsung</option>
-            <option value="Apple">apple</option>
-        </select>
-        
-        <label for="modelo">modelo: </label>
-        <input type="text" id="modelo" name="modelo">
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio">
 
-        <label for="precio">precio: </label>
-        <input type="number" id="precio" name="precio">
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" name="descripcion">
 
-        <label for="descripcion">descripcion: </label>
-        <input type="text" id="descripcion" nombre="descripcion">
+            <label for="foto">Foto del dispositivo:</label>
+            <input type="file" id="foto" name="foto" accept="image/*" required> 
 
-        <label for="foto">foto del dispositivo: </label>
-        <input type="file" id="foto" nombre="foto" accept="image/*" required> 
-
-        <button type="submit">enviar</button>
+            <button type="submit">Enviar</button>
         </form>
-        <div id="mensaje-exito" style="display: none;">¡publicado!</div>
-
     </main>
 
-    <script> 
+    <script>
         function mostrarMensaje() {
-        document.getElementById('mensaje-exito').style.display = 'block';
-    
-        document.getElementById('vender_form').reset();
-    
-        return false;
-    }
+            document.getElementById('mensaje-exito').style.display = 'block';
+            document.getElementById('vender_form').reset();
+            return false;
+        }
     </script>
 </body>
 </html>
