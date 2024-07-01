@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pagina principal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel = "stylesheet" href = "../css/pagina_principal.css">
 </head>
 <body>
     <h1>Plataforma de Compra y Venta de Dispositivos Electrónicos</h1>
     <section class="seccion principal">
         <img src = "../img/comppraventaimg2">
-    <h2>selecciona tu opcion:</h2>
+    <h2>Selecciona tu opcion:</h2>
         <div class="botones inicio">
             <button onclick="location.href ='comprar.html'"> Quiero comprar</button>
             <button onclick="location.href ='vender.html'">Quiero vender </button>
@@ -20,9 +21,9 @@
      <p>Explora nuestra plataforma para vender tu dispositivo móvil, tableta o computadora, o adquirir uno nuevo de nuestro catálogo en tan solo dos pasos.</p>
      <h3>MARCAS DISPONIBLES</h3>
      <ul>
-        <li>Samsumg</li>
+        <li>Samsung</li>
         <li>Apple</li>
-        <li>xiaomi</li>
+        <li>Xiaomi</li>
      </ul>
 
     <ul id = "lista">
@@ -50,7 +51,7 @@
 
         function parse_datos(contenido){
             console.log(contenido)
-           const lista = document.getElementById("lista")
+            const lista = document.getElementById("lista")
             for(let indice = 0; indice < contenido.length; indice ++){
                 const elemento = document.createElement("li")
                 elemento.append(contenido[indice].modelo)
@@ -64,6 +65,9 @@
             .catch(mostrar_error)  // si algo sale mal el catch ejecuta la funcion de adentro
 
     </script>   
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 
 </body>
 </html>
