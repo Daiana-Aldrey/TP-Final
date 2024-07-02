@@ -6,10 +6,12 @@
     <title>pagina principal</title>
     <link rel = "stylesheet" href = "css/style.css">
 </head>
+
 <body>
     <h1>COMPRA/VENDE TU CELULAR EN 5 MINUTOS</h1>
     <section class="seccion principal">
         <img src = "img/comppraventaimg2">
+
     <h2>selecciona tu opcion:</h2>
         <div class="botones inicio">
             <button onclick="location.href ='comprar.html'"> Quiero comprar</button>
@@ -17,16 +19,14 @@
         </div>
      </section>
 
-     <p>Aqui podras vender tu celular o comprar uno nuevo de catalogo en solo 2 clics</p>
+
      <h3>MARCAS DISPONIBLES</h3>
      <ul>
-        <li>Samsumg</li>
-        <li>Apple</li>
-        <li>xiaomi</li>
+        <li><a href="http://localhost:8000/samsung">Samsumg</a></li>
+        <li><a href="http://localhost:8000/apple">Apple</a></li>
+        <li><a href="http://localhost:8000/xiaomi">xiaomi</a></li>
      </ul>
 
-    <ul id = "lista">
-    </ul>
      <footer>        
         <p> Este sitio web es únicamente para propósitos educativos. La información proporcionada 
             aquí no debe ser considerada como asesoramiento profesional. Nos esforzamos por mantener 
@@ -34,36 +34,6 @@
             exactitud. El uso de este sitio web está sujeto a nuestros términos y condiciones.</p>
     </footer>
 
-    <script>
-
-        function mostrar_datos(datos){
-            console.log("Exito")
-            console.log(datos)
-
-            return datos.json()
-        }
-
-        function mostrar_error(error){
-            console.log("Error")
-            console.log(error)
-        }
-
-        function parse_datos(contenido){
-            console.log(contenido)
-           const lista = document.getElementById("lista")
-            for(let indice = 0; indice < contenido.length; indice ++){
-                const elemento = document.createElement("li")
-                elemento.append(contenido[indice].modelo)
-                lista.append(elemento)
-            }
-        }
-
-        fetch("http://localhost:5000/celulares/") // el fetch es como cun curl que hace una request a lo que se le pasa
-            .then(mostrar_datos) //proporciona informacion del request
-            .then(parse_datos) // recibe el contenido del request
-            .catch(mostrar_error)  // si algo sale mal el catch ejecuta la funcion de adentro
-
-    </script>   
 
 </body>
 </html>
