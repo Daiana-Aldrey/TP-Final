@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app) #donde esta el entorno virtual intalar -> pip install flask-cors para que funcione todo 
 
 port = 5000
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:informatico2027.@localhost:5432/tienda_online' #conecto la base de datos //usario_bd:contraseña@localhost:5432/nombre_bd
+app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online' #conecto la base de datos //usario_bd:contraseña@localhost:5432/nombre_bd
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 @app.route('/')
@@ -60,7 +60,7 @@ def celular(id_celular):
             'precio': celular.precio,
             'plan de financiacion': celular.financiamiento,
             'descripcion': celular.descripcion,
-            'imagen': vehiculo.imagen_url
+            'imagen': celular.imagen_url
         }
         return jsonify(celular_informacion)
     except:
