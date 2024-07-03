@@ -12,7 +12,7 @@ CORS(app) #donde esta el entorno virtual intalar -> pip install flask-cors para 
 
 port = 5000
 #app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:1215308@localhost:5432/tienda_online' #conecto la base de datos //usario_bd:contraseña@localhost:5432/nombre_bd
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online
+app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 
