@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS 
 from modelos import db, Celular,Tablet, Notebook, Plan
-from filtrar_productos import filtrar_productos_por_marca, filtrar_notebooks_por_marca
+from filtrar_productos import filtrar_productos_por_marca, filtrar_notebooks_por_marca, filtrar_producto_por_id, filtrar_notebook_por_id
 
 SAMSUNG = "Samsung"
 APPLE = "Apple"
@@ -12,8 +12,8 @@ CORS(app) #donde esta el entorno virtual intalar -> pip install flask-cors para 
 
 port = 5000
 #conecto la base de datos //usario_bd:contraseña@localhost:5432/nombre_bd
-#app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:1215308@localhost:5432/tienda_online' 
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online'
+app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:1215308@localhost:5432/tienda_online' 
+#app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 
@@ -99,29 +99,39 @@ def celulares():
  """
         
 
-@app.route("/celulares/<id_celular>", methods=["GET"]) #Se obtiene el celular con el id dado
-def celular(id_celular):
+@app.route("/producto/<id_producto>/<modelo>", methods=["GET"])
+def producto(id_producto, modelo):
     try:
-        celular = Celular.query.get(id_celular)
-        celular_informacion = {
-            'id': celular.id,
-            'marca': celular.marca,
-            'modelo': celular.modelo,
-            'procesador' : celular.procesador,
-            'memoria' : celular.memoria,
-            'camara delantera': celular.camara_delantera,
-            'camara trasera' : celular.camara_trasera,
-            'bateria' : celular.bateria,
-            'pantalla' : celular.pantalla,
-            'precio': celular.precio,
-            'plan de financiamiento': celular.financiacion,
-            'descripcion': celular.descripcion,
-            'imagen': celular.imagen_url
-        }
+        # Busca el producto por modelo en las tres tablas
+        celular = Celular.query.filter_by(modelo=modelo).first()
+        tablet = Tablet.query.filter_by(modelo=modelo).first()
+        notebook = Notebook.query.filter_by(modelo=modelo).first()
 
-        return jsonify(celular_informacion)
-    except:
-        return jsonify("Lo buscado no es un producto que este a la venta"), 400
+        # Si se encuentra el producto en alguna de las tablas
+        if celular or tablet or notebook:
+            # Obtiene el ID del producto encontrado
+            producto_id = celular.id if celular else tablet.id if tablet else notebook.id
+
+            # Determina la tabla a la que pertenece el producto
+            tabla_perteneciente = Celular if celular else Tablet if tablet else Notebook
+
+            # Busca el producto por ID y muestra la información
+            if tabla_perteneciente == Celular:
+                producto_informacion = filtrar_producto_por_id(producto_id, tabla_perteneciente)
+            elif tabla_perteneciente == Tablet:
+                producto_informacion = filtrar_producto_por_id(producto_id, tabla_perteneciente)
+            else:  # Si es un notebook
+                producto_informacion = filtrar_notebook_por_id(producto_id)
+
+            return producto_informacion
+
+        else:
+            # Si no se encuentra el producto, devuelve un error
+            return jsonify("Producto no encontrado"), 404
+
+    except Exception as e:
+        # Maneja cualquier error inesperado
+        return jsonify(f"Error al mostrar el producto: {str(e)}"), 500
 
 
 

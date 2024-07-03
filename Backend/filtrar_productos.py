@@ -57,3 +57,53 @@ def filtrar_notebooks_por_marca(marca):
 
     except Exception as e:
         return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500
+
+
+def filtrar_producto_por_id(id_producto, tabla_perteneciente):
+    try:
+        producto = tabla_perteneciente.query.get(id_producto)
+        producto_informacion = {
+            'id': producto.id,
+            'marca': producto.marca,
+            'modelo': producto.modelo,
+            'procesador': producto.procesador,
+            'memoria': producto.memoria,
+            'camara delantera': producto.camara_delantera,
+            'camara trasera': producto.camara_trasera,
+            'bateria': producto.bateria,
+            'pantalla': producto.pantalla,
+            'precio': producto.precio,
+            'plan de financiamiento': producto.financiacion,
+            'descripcion': producto.descripcion,
+            'imagen': producto.imagen_url
+            }
+        #print(celular_informacion)
+        return jsonify(producto_informacion)
+        
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500    
+
+def filtrar_notebook_por_id(id_notebook):
+    try:
+        notebook = Notebook.query.get(id_notebook)
+        notebook_informacion = {
+            'id': notebook.id,
+            'marca': notebook.marca,
+            'modelo': notebook.modelo,
+            'procesador': notebook.procesador,
+            'memoria': notebook.memoria,
+            'almacenamiento': notebook.almacenamiento,
+            'camara delantera': notebook.camara_delantera,
+            'sistema operativo': notebook.sistema_operativo,
+            'bateria': notebook.bateria,
+            'pantalla': notebook.pantalla,
+            'precio': notebook.precio,
+            'plan de financiamiento': notebook.financiacion,
+            'descripcion': notebook.descripcion,
+            'imagen': notebook.imagen_url
+        }
+
+        return jsonify(notebook_informacion)
+        
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500        
