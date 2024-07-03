@@ -56,18 +56,8 @@ def tablets_xiaomi():
 @app.route("/xiaomi/notebooks/")
 def notebooks_xiaomi():
     return filtrar_notebooks_por_marca(XIAOMI)     
-
-
-
-
-
-
       
 
-
-
-
-"""
 @app.route("/celulares/") #muestra todos los celulares
 def celulares():
     try:
@@ -96,7 +86,7 @@ def celulares():
 
     except Exception as e:
         return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500        
- """
+
         
 
 @app.route("/producto/<id_producto>/<modelo>", methods=["GET"])
