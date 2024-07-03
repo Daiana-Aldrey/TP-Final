@@ -7,10 +7,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel = "stylesheet" href = "css/pagina_principal.css">
 </head>
+
 <body>
     <h1>Plataforma de Compra y Venta de Dispositivos Electrónicos</h1>
     <section class="seccion principal">
-        <img src = "../img/comppraventaimg2">
+        <img src = "img/comppraventaimg2">
         <h2>Selecciona tu opcion:</h2>
         <div class="botones inicio">
             <button onclick="location.href ='comprar.html'"> Quiero comprar</button>
@@ -23,13 +24,19 @@
      <div class="container">
         <div class="row align-items-center">
             <div class="col-4">
-                <img src = "https://i.pinimg.com/originals/7a/0d/05/7a0d054e60bc1a2fc44988f9e3ece709.png" class="img-fluid" id="logo_xiaomi">
+                <a href="http://localhost:8000/xiaomi">
+                    <img src = "https://i.pinimg.com/originals/7a/0d/05/7a0d054e60bc1a2fc44988f9e3ece709.png" class="img-fluid" id="logo_xiaomi">
+                </a>
             </div>
             <div class="col-4">
-                <img src = "https://images.vexels.com/media/users/3/129234/isolated/lists/73970c892d748c7507db8e10d71535b0-icono-del-logo-de-apple.png" class="img-fluid mx-auto d-block" id="logo_apple">
+                <a href="http://localhost:8000/apple">
+                    <img src = "https://images.vexels.com/media/users/3/129234/isolated/lists/73970c892d748c7507db8e10d71535b0-icono-del-logo-de-apple.png" class="img-fluid mx-auto d-block" id="logo_apple">
+                </a>
             </div>
             <div class="col-4">
-                <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Samsung_wordmark.svg/1200px-Samsung_wordmark.svg.png" class="img-fluid" id="logo_samsung">
+                <a href="http://localhost:8000/samsung">
+                    <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Samsung_wordmark.svg/1200px-Samsung_wordmark.svg.png" class="img-fluid" id="logo_samsung">
+                </a>
             </div>
         </div>
     </div>
@@ -83,7 +90,7 @@
                 const card = document.createElement("a");
                 card.setAttribute("class", "card text-decoration-none mx-auto d-block");
                 card.setAttribute("style", "width: 50%;");
-                card.setAttribute("href", `/character?id=${contenido[index].id}`);
+                card.setAttribute("href", `/producto?id=${contenido[index].id}`);
 
                 const image = document.createElement("img");
                 image.setAttribute("class", "card-img-top");
