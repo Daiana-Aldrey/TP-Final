@@ -1,72 +1,105 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS 
-from modelos import db, Celular, Plan
+from modelos import db, Celular, Tablet, Notebook, Plan
 
 app = Flask(__name__)
-CORS(app) #donde esta el entorno virtual intalar -> pip install flask-cors para que funcione todo 
+CORS(app)  
 
 port = 5000
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online' #conecto la base de datos //usario_bd:contraseña@localhost:5432/nombre_bd
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
-@app.route('/')
-def hello_world():
-    return 'Hello world!'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://juan:juan@localhost/tienda_online'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-@app.route("/celulares/") #muestra todos los celulares
-def celulares():
+@app.route("/productos/<tipo>", methods=["GET"])
+def productos(tipo):
     try:
-        celulares = Celular.query.all()
+        if tipo == 'celulares':
+            productos = Celular.query.all()
+        elif tipo == 'tablets':
+            productos = Tablet.query.all()
+        elif tipo == 'notebooks':
+            productos = Notebook.query.all()
+        else:
+            return jsonify("Tipo de producto no válido"), 400
+        
         listado_de_productos = []
-        for celular in celulares:
-            celular_informacion = {
-            'id': celular.id,
-            'marca': celular.marca,
-            'modelo': celular.modelo,
-            'procesador' : celular.procesador,
-            'memoria' : celular.memoria,
-            'camara delantera': celular.camara_delantera,
-            'camara trasera' : celular.camara_trasera,
-            'bateria' : celular.bateria,
-            'pantalla' : celular.pantalla,
-            'precio': celular.precio,
-            'plan de financiamiento': celular.financiacion,
-            'descripcion': celular.descripcion,
-            'imagen': celular.imagen_url
+        for producto in productos:
+            producto_info = {
+                'id': producto.id,
+                'marca': producto.marca,
+                'modelo': producto.modelo,
+                'descripcion': producto.descripcion,
+                'procesador': producto.procesador,
+                'memoria': producto.memoria,
+                'camara delantera': producto.camara_delantera,
+                'camara trasera': producto.camara_trasera,
+                'pantalla': producto.pantalla,
+                'bateria': producto.bateria,
+                'precio': producto.precio,
+                'financiacion': producto.financiacion.nombre if producto.financiacion else None,
+                'imagen': producto.imagen_url
             }
-
-            listado_de_productos.append(celular_informacion)
-
+            listado_de_productos.append(producto_info)
         return jsonify(listado_de_productos)
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500
+
+@app.route("/productos/<tipo>/<int:id_producto>", methods=["GET"])
+def producto_por_id(tipo, id_producto):
+    try:
+        if tipo == 'celulares':
+            producto = Celular.query.get(id_producto)
+        elif tipo == 'tablets':
+            producto = Tablet.query.get(id_producto)
+        elif tipo == 'notebooks':
+            producto = Notebook.query.get(id_producto)
+        else:
+            return jsonify("Tipo de producto no válido"), 400
+
+        if not producto:
+            return jsonify("Producto no encontrado"), 404
+
+        producto_info = {
+            'id': producto.id,
+            'marca': producto.marca,
+            'modelo': producto.modelo,
+            'descripcion': producto.descripcion,
+            'procesador': producto.procesador,
+            'memoria': producto.memoria,
+            'camara delantera': producto.camara_delantera,
+            'camara trasera': producto.camara_trasera,
+            'pantalla': producto.pantalla,
+            'bateria': producto.bateria,
+            'precio': producto.precio,
+            'financiacion': producto.financiacion.nombre if producto.financiacion else None,
+            'imagen': producto.imagen_url
+        }
+
+        return jsonify(producto_info)
 
     except Exception as e:
-        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500        
- 
-        
+        return jsonify(f"Error al intentar mostrar el producto: {str(e)}"), 500
 
-@app.route("/celulares/<id_celular>", methods=["GET"]) #Se obtiene el celular con el id dado
-def celular(id_celular):
+
+@app.route('/planes_financiamiento', methods=['GET'])
+def planes_financiamiento():
     try:
-        celular = Celular.query.get(id_celular)
-        celular_informacion = {
-            'id': celular.id,
-            'marca': celular.marca,
-            'modelo': celular.modelo,
-            'procesador' : celular.procesador,
-            'memoria' : celular.memoria,
-            'camara delantera': celular.camara_delantera,
-            'camara trasera' : celular.camara_trasera,
-            'bateria' : celular.baterias,
-            'precio': celular.precio,
-            'plan de financiacion': celular.financiamiento,
-            'descripcion': celular.descripcion,
-            'imagen': celular.imagen_url
-        }
-        return jsonify(celular_informacion)
-    except:
-        return jsonify("Lo buscado no es un producto que este a la venta"), 400
+        planes = Plan.query.all()
 
+        listado_planes = []
+        for plan in planes:
+            plan_info = {
+                'id': plan.id,
+                'nombre': plan.nombre,
+                'cuotas': plan.cuotas,
+                'intereses': plan.intereses
+            }
+            listado_planes.append(plan_info)
 
+        return jsonify(listado_planes)
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los planes de financiamiento: {str(e)}"), 500
 
 
 if __name__ == '__main__':
@@ -74,5 +107,5 @@ if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
         db.create_all()
-    app.run(host = '0.0.0.0', debug= True, port=port)       
+    app.run(host='0.0.0.0', debug=True, port=port)
     print('Started ...')
