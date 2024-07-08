@@ -11,6 +11,36 @@ def filtrar_productos_por_marca(modelo, marca):
                 'id': producto.id,
                 'marca': producto.marca,
                 'modelo': producto.modelo,
+                'procesador': producto.procesador if hasattr(producto, 'procesador') else None,
+                'memoria': producto.memoria if hasattr(producto, 'memoria') else None,
+                'camara delantera': producto.camara_delantera if hasattr(producto, 'camara_delantera') else None,
+                'camara trasera': producto.camara_trasera if hasattr(producto, 'camara_trasera') else None,
+                'bateria': producto.bateria if hasattr(producto, 'bateria') else None,
+                'pantalla': producto.pantalla if hasattr(producto, 'pantalla') else None,
+                'almacenamiento': producto.almacenamiento if hasattr(producto, 'almacenamiento') else None,
+                'sistema operativo': producto.sistema_operativo if hasattr(producto, 'sistema_operativo') else None,
+                'precio': producto.precio,
+                'plan de financiamiento': producto.financiacion if hasattr(producto, 'financiacion') else None,
+                'descripcion': producto.descripcion,
+                'imagen': producto.imagen_url
+            }
+            listado_de_productos.append(producto_info)
+
+        return jsonify(listado_de_productos), 200
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500
+
+
+"""def filtrar_productos_por_marca(modelo, marca):
+    try:
+        listado_de_productos = []
+        productos = modelo.query.filter_by(marca=marca).all()
+        for producto in productos:
+            producto_info = {
+                'id': producto.id,
+                'marca': producto.marca,
+                'modelo': producto.modelo,
                 'procesador': producto.procesador,
                 'memoria': producto.memoria,
                 'camara delantera': producto.camara_delantera,
@@ -57,7 +87,7 @@ def filtrar_notebooks_por_marca(marca):
 
     except Exception as e:
         return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500
-
+"""
 
 def filtrar_producto_por_id(id_producto, tabla_perteneciente):
     try:

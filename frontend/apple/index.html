@@ -74,7 +74,7 @@
             }
         }
 
-       fetch("http://localhost:5000/apple/celulares")
+       fetch("http://localhost:5000/Apple/celulares")
             .then(mostrar_datos)
             .then(function (contenido) {
                 const id_lista = "lista_celulares";
@@ -82,7 +82,7 @@
             })
             .catch(mostrar_error); 
 
-        fetch("http://localhost:5000/apple/tablets/")
+        fetch("http://localhost:5000/Apple/tablets")
             .then(mostrar_datos)
             .then(function (contenido) {
                 const id_lista = "lista_tablets";
@@ -90,7 +90,7 @@
             })
             .catch(mostrar_error);
 
-        fetch("http://localhost:5000/apple/notebooks/")
+        fetch("http://localhost:5000/Apple/notebooks")
             .then(mostrar_datos)
             .then(function (contenido) {
                 const id_lista = "lista_notebooks";

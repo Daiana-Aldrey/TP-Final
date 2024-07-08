@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS 
 from modelos import db, Celular,Tablet, Notebook, Plan
-from filtrar_productos import filtrar_productos_por_marca, filtrar_notebooks_por_marca, filtrar_producto_por_id, filtrar_notebook_por_id
+from filtrar_productos import filtrar_productos_por_marca
 
 SAMSUNG = "Samsung"
 APPLE = "Apple"
@@ -21,42 +21,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 def hello_world():
     return 'Hello world!'
 
-@app.route("/samsung/celulares/")
-def celulares_samsung():
-    return filtrar_productos_por_marca(Celular, SAMSUNG)
+@app.route("/<marca>/celulares", methods=['GET'])
+def filtrar_celulares(marca):
+    return filtrar_productos_por_marca(Celular, marca)
 
-@app.route("/samsung/tablets/")
-def tablets_samsung():
-    return filtrar_productos_por_marca(Tablet, SAMSUNG)
+@app.route("/<marca>/tablets", methods=['GET'])
+def filtrar_tablets(marca):
+    return filtrar_productos_por_marca(Tablet, marca)    
 
-@app.route("/samsung/notebooks/")
-def notebooks_samsung():
-    return filtrar_notebooks_por_marca(SAMSUNG)    
-
-@app.route("/apple/celulares/")
-def celulares_apple():
-    return filtrar_productos_por_marca(Celular, APPLE)
-
-@app.route("/apple/tablets/")
-def tablets_apple():
-    return filtrar_productos_por_marca(Tablet, APPLE)
-
-@app.route("/apple/notebooks/")
-def notebooks_apple():
-    return filtrar_notebooks_por_marca(APPLE)    
-
-@app.route("/xiaomi/celulares/")
-def celulares_sxiaomi():
-    return filtrar_productos_por_marca(Celular, XIAOMI)
-
-@app.route("/xiaomi/tablets/")
-def tablets_xiaomi():
-    return filtrar_productos_por_marca(Tablet, XIAOMI)
-
-@app.route("/xiaomi/notebooks/")
-def notebooks_xiaomi():
-    return filtrar_notebooks_por_marca(XIAOMI)     
-      
+@app.route("/<marca>/notebooks", methods=['GET'])
+def filtrar_notebooks(marca):
+    return filtrar_productos_por_marca(Notebook, marca)
+  
 
 @app.route("/celulares/") #muestra todos los celulares
 def celulares():
