@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pagina principal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel = "stylesheet" href = "pagina_comprar.css">
+</head>
+
+<body data-bs-theme="dark">
+    <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">+</button>
+    <div class="container">
+        <div class="offcanvas offcanvas-start" tabindex="1" id="offcanvas">
+           <div class="offcanvas-header">
+               <h1 class="offcanvas-title">PRODUCTOS</h3>
+               <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+           </div>
+           <div class="offcanvas-body">
+                <div class="list-group">
+                    <a href="http://localhost:8000/comprar/index.html?nombre=Celular" class="list-group-item list-group-item-action">Celulares</a>
+                    <a href="http://localhost:8000/comprar/index.html?nombre=Tablet" class="list-group-item list-group-item-action">Tablets</a>
+                    <a href="http://localhost:8000/comprar/index.html?nombre=Notebook" class="list-group-item list-group-item-action">Notebooks</a>
+                </div>
+                <br> <br>
+                <div class="dropdown">
+                    <button type="button" id="boton" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                    Marca
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" id="todas">Todas</a></li>
+                        <li><a class="dropdown-item" id="apple">Apple</a></li>
+                        <li><a class="dropdown-item" id="samsung">Samsung</a></li>
+                        <li><a class="dropdown-item" id="xiaomi">Xiaomi</a></li>
+                    </ul>
+                </div>
+           </div>
+        </div>
+    </div>
+    <h1>Plataforma de Compra y Venta de Dispositivos Electrónicos</h1>
+
+    <div class="container" data-bs-theme="dark">
+        <div class="row align-items-center" id="productos">
+        </div>
+    </div>
+
+    <footer>        
+        <p> Este sitio web es únicamente para propósitos educativos. La información proporcionada 
+            aquí no debe ser considerada como asesoramiento profesional. Nos esforzamos por mantener 
+            la información actualizada y precisa, pero no garantizamos su integridad ni 
+            exactitud. El uso de este sitio web está sujeto a nuestros términos y condiciones.</p>
+    </footer>
+
+    <script>
+
+        function mostrar_datos(datos){
+            console.log("Exito")
+            console.log(datos)
+
+            return datos.json()
+        }
+
+        function mostrar_error(error){
+            console.log("Error")
+            console.log(error)
+        }
+
+        function parse_datos(contenido){
+            console.log(contenido)
+            const container = document.getElementById("productos");
+            for (let index = 0; index < contenido.length; index++) {
+                const item = document.createElement("div");
+                item.setAttribute("class", "col-6 col-md-4 col-lg-3 col-xlg-2");
+
+                const card = document.createElement("a");
+                card.setAttribute("class", "card text-decoration-none mx-auto d-block");
+                card.setAttribute("style", "width: 80%;");
+                card.setAttribute("href", `/producto?id=${contenido[index].id}`);
+
+                const image = document.createElement("img");
+                image.setAttribute("class", "card-img-top");
+                image.setAttribute("src", contenido[index].imagen)
+
+                const card_title = document.createElement("div");
+                card_title.setAttribute("class", "card-title");
+
+                card_title.append(contenido[index].marca + ' ');
+                card_title.append(contenido[index].modelo);
+                card.append(image);
+                card.append(card_title);
+                item.append(card);
+
+                container.append(item);
+            }
+        }
+
+        let parametros = window.location.search;
+        let tabla = new URLSearchParams(parametros).get("nombre");
+        let marca = new URLSearchParams(parametros).get("marca");
+
+        let boton = document.getElementById("boton");
+
+        if (marca === null) {
+            marca = '';
+        }else{
+            boton.append(`: ${marca}`);
+            marca = '/'+marca
+        }
+        console.log(tabla)
+        console.log(marca)
+
+
+        let todas = document.getElementById("todas");
+        todas.setAttribute("href", `http://localhost:8000/comprar/index.html?nombre=${tabla}`);
+        
+        let apple = document.getElementById("apple");
+        apple.setAttribute("href", `http://localhost:8000/comprar/index.html?nombre=${tabla}&marca=Apple`)
+
+        let samsung = document.getElementById("samsung");
+        samsung.setAttribute("href", `http://localhost:8000/comprar/index.html?nombre=${tabla}&marca=Samsung`)
+
+        let xiaomi = document.getElementById("xiaomi");
+        xiaomi.setAttribute("href", `http://localhost:8000/comprar/index.html?nombre=${tabla}&marca=Xiaomi`)
+
+        fetch("http://localhost:5000/comprar/"+tabla+marca) // el fetch es como cun curl que hace una request a lo que se le pasa
+            .then(mostrar_datos) //proporciona informacion del request
+            .then(parse_datos) // recibe el contenido del request
+            .catch(mostrar_error)  // si algo sale mal el catch ejecuta la funcion de adentro
+
+    </script>   
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+
+
+</body>
+</html>
