@@ -21,6 +21,66 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 def hello_world():
     return 'Hello world!'
 
+@app.route("/comprar/<nombre>")
+def mostrar_productos(nombre):
+    try:
+        if nombre == 'Celular':
+            productos= Celular.query.all()
+        elif nombre == 'Tablet':
+            productos = Tablet.query.all()
+        elif nombre == 'Notebook':
+            productos = Notebook.query.all()
+        #elif not nombre:
+            #productos = <Acá hay que hacer un join de todas las tablas>
+    
+        listado_de_productos = []
+        for producto in productos:
+            producto_informacion = {
+                'id': producto.id,
+                'marca': producto.marca,
+                'modelo': producto.modelo,
+                'precio': producto.precio,
+                'plan de financiamiento': producto.financiacion,
+                'imagen': producto.imagen_url
+            }
+
+            listado_de_productos.append(producto_informacion)
+        return jsonify(listado_de_productos)
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500     
+
+
+@app.route("/comprar/<nombre>/<marca>")
+def filtrar_por_marca(nombre, marca):
+    try:
+        if nombre == 'Celular':
+            productos= Celular.query.filter_by(marca=marca).all()
+        elif nombre == 'Tablet':
+            productos = Tablet.query.filter_by(marca=marca).all()
+        elif nombre == 'Notebook':
+            productos = Notebook.query.filter_by(marca=marca).all()
+        #elif not nombre:
+            #productos = <Acá hay que hacer un join de todas las tablas>
+
+        
+        listado_de_productos = []
+        for producto in productos:
+            producto_informacion = {
+                'id': producto.id,
+                'marca': producto.marca,
+                'modelo': producto.modelo,
+                'precio': producto.precio,
+                'plan de financiamiento': producto.financiacion,
+                'imagen': producto.imagen_url
+            }
+
+            listado_de_productos.append(producto_informacion)
+        return jsonify(listado_de_productos)
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500     
+
 @app.route("/<marca>/celulares", methods=['GET'])
 def filtrar_celulares(marca):
     return filtrar_productos_por_marca(Celular, marca)
