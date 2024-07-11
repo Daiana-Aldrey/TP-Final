@@ -107,7 +107,6 @@ def filtrar_producto_por_id(id_producto, tabla_perteneciente):
             'descripcion': producto.descripcion,
             'imagen': producto.imagen_url
             }
-        #print(celular_informacion)
         return jsonify(producto_informacion)
         
     except Exception as e:

@@ -54,9 +54,10 @@
                 const elemento = document.createElement("div");
                 elemento.classList.add("list-inline-item"); // Agrega clase de Bootstrap para items
 
-                const card = document.createElement("div")
+                const card = document.createElement("a")
                 card.setAttribute("class", "card")
-               
+                card.setAttribute("href",`/producto?id=${contenido[indice].id}&modelo=${encodeURIComponent(contenido[indice].modelo)}`);
+              
                 const imagen = document.createElement("img")
                 imagen.setAttribute("class", "card-body")
                 imagen.setAttribute("src", contenido[indice].imagen)
@@ -73,6 +74,7 @@
                 container.append(elemento)
             }
         }
+
 
        fetch("http://localhost:5000/Apple/celulares")
             .then(mostrar_datos)

@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS 
 from modelos import db, Celular,Tablet, Notebook, Plan
-from filtrar_productos import filtrar_productos_por_marca
+from filtrar_productos import filtrar_productos_por_marca, filtrar_producto_por_id, filtrar_notebook_por_id
 
 SAMSUNG = "Samsung"
 APPLE = "Apple"
@@ -92,38 +92,7 @@ def filtrar_tablets(marca):
 @app.route("/<marca>/notebooks", methods=['GET'])
 def filtrar_notebooks(marca):
     return filtrar_productos_por_marca(Notebook, marca)
-  
 
-@app.route("/celulares/") #muestra todos los celulares
-def celulares():
-    try:
-        celulares = Celular.query.all()
-        listado_de_productos = []
-        for celular in celulares:
-            celular_informacion = {
-            'id': celular.id,
-            'marca': celular.marca,
-            'modelo': celular.modelo,
-            'procesador' : celular.procesador,
-            'memoria' : celular.memoria,
-            'camara delantera': celular.camara_delantera,
-            'camara trasera' : celular.camara_trasera,
-            'bateria' : celular.bateria,
-            'pantalla' : celular.pantalla,
-            'precio': celular.precio,
-            'plan de financiamiento': celular.financiacion,
-            'descripcion': celular.descripcion,
-            'imagen': celular.imagen_url
-            }
-
-            listado_de_productos.append(celular_informacion)
-
-        return jsonify(listado_de_productos)
-
-    except Exception as e:
-        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500        
-
-        
 
 @app.route("/producto/<id_producto>/<modelo>", methods=["GET"])
 def producto(id_producto, modelo):
@@ -157,7 +126,41 @@ def producto(id_producto, modelo):
 
     except Exception as e:
         # Maneja cualquier error inesperado
-        return jsonify(f"Error al mostrar el producto: {str(e)}"), 500
+        return jsonify(f"Error al mostrar el producto: {str(e)}"), 500    
+  
+
+@app.route("/celulares/") #muestra todos los celulares
+def celulares():
+    try:
+        celulares = Celular.query.all()
+        listado_de_productos = []
+        for celular in celulares:
+            celular_informacion = {
+            'id': celular.id,
+            'marca': celular.marca,
+            'modelo': celular.modelo,
+            'procesador' : celular.procesador,
+            'memoria' : celular.memoria,
+            'camara delantera': celular.camara_delantera,
+            'camara trasera' : celular.camara_trasera,
+            'bateria' : celular.bateria,
+            'pantalla' : celular.pantalla,
+            'precio': celular.precio,
+            'plan de financiamiento': celular.financiacion,
+            'descripcion': celular.descripcion,
+            'imagen': celular.imagen_url
+            }
+
+            listado_de_productos.append(celular_informacion)
+
+        return jsonify(listado_de_productos)
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500        
+
+        
+
+
 
 
 
