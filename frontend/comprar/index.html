@@ -8,8 +8,7 @@
     <link rel = "stylesheet" href = "pagina_comprar.css">
 </head>
 
-<body data-bs-theme="dark">
-    <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">+</button>
+<body>
     <div class="container">
         <div class="offcanvas offcanvas-start" tabindex="1" id="offcanvas">
            <div class="offcanvas-header">
@@ -23,35 +22,42 @@
                     <a href="http://localhost:8000/comprar/index.html?nombre=Celular" class="list-group-item list-group-item-action">Celulares</a>
                     <a href="http://localhost:8000/comprar/index.html?nombre=Tablet" class="list-group-item list-group-item-action">Tablets</a>
                     <a href="http://localhost:8000/comprar/index.html?nombre=Notebook" class="list-group-item list-group-item-action">Notebooks</a>
-                </div>
-                <br> 
-                <div class="dropdown">
-                    <button type="button" id="boton" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                    Marca
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" id="todas">Todas</a></li>
-                        <li><a class="dropdown-item" id="apple">Apple</a></li>
-                        <li><a class="dropdown-item" id="samsung">Samsung</a></li>
-                        <li><a class="dropdown-item" id="xiaomi">Xiaomi</a></li>
-                    </ul>
-                </div>
+                </div>                
            </div>
         </div>
     </div>
-    <h1>Plataforma de Compra y Venta de Dispositivos Electrónicos</h1>
-
-    <div class="container" data-bs-theme="dark">
-        <div class="row align-items-center" id="productos">
+    <header>
+        <h1>Plataforma de Compra y Venta de Dispositivos Electrónicos</h1>
+        <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">Menú</button>
+    </header>
+    <div class="container">
+        <div class="d-grid d-md-flex justify-content-md-end">
+            <div class="dropdown">
+                <button id="boton" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                Marca
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" id="todas">Todas</a></li>
+                    <li><a class="dropdown-item" id="apple">Apple</a></li>
+                    <li><a class="dropdown-item" id="samsung">Samsung</a></li>
+                    <li><a class="dropdown-item" id="xiaomi">Xiaomi</a></li>
+                </ul>
+            </div>
+        </div>
+    
+        <div class="container">
+            <div class="row align-items-center" id="productos">
+            </div>
         </div>
     </div>
-
-    <footer>        
-        <p> Este sitio web es únicamente para propósitos educativos. La información proporcionada 
-            aquí no debe ser considerada como asesoramiento profesional. Nos esforzamos por mantener 
-            la información actualizada y precisa, pero no garantizamos su integridad ni 
-            exactitud. El uso de este sitio web está sujeto a nuestros términos y condiciones.</p>
-    </footer>
+    <div class="alert alert-info mt-auto">
+        <footer>        
+            <p> Este sitio web es únicamente para propósitos educativos. La información proporcionada 
+                aquí no debe ser considerada como asesoramiento profesional. Nos esforzamos por mantener 
+                la información actualizada y precisa, pero no garantizamos su integridad ni 
+                exactitud. El uso de este sitio web está sujeto a nuestros términos y condiciones.</p>
+        </footer>
+    </div>
 
     <script>
 

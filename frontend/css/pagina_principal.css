@@ -1,15 +1,32 @@
-body {
-    background-color: black;
+*{
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    color: white;
 }
-
-.seccion.principal, h1 {
+body {
+    font-family: Arial, sans-serif;
+}
+header{
+    font-weight: 400;
+    padding-top: 3em;
+    background-color: #0d6efd;
+    color: white;
+    margin-bottom: 1em;
+}
+h1{
     text-align: center;
-    color: green;
-    margin-top: 20px;
+}
+.btn-dark{
+    margin: 1em;
+}
+h4{
+    padding: 1em;
+    color: #0d6efd;
+    text-align: center;
+}
+.seccion.principal{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    color: #0d6efd;
 }
 
 img {
@@ -22,25 +39,24 @@ img {
 }
 
 p {
+    color: #0d6efd;
     text-align: center;
-    color: white;
     font-size: 18px;
-    margin: 20px 0;
 }
 footer p{
     font-size: 9px;
 }
-
-ul li, h3 {
-    color: white;
+h2 {
+    color: #0d6efd;
     text-align: center;
-    list-style-type: none;
 }
 
 footer {
     font-size: 10px;
     text-align: center;
-    color: #999;
+}
+h2{
+    margin: 1em;
 }
 
 #logo_xiaomi{
@@ -57,7 +73,15 @@ footer {
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: 800;
+    color: #0d6efd;
 }
 .card-body{
     text-align: center;
+}
+.card-img-top{
+    width: 100%;
+    height: 250px;
+}
+.alert{
+    margin-top: 1em;
 }
