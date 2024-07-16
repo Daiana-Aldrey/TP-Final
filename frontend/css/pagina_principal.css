@@ -42,3 +42,22 @@ footer {
     text-align: center;
     color: #999;
 }
+
+#logo_xiaomi{
+    height: 150px;
+}
+#logo_samsung{
+    width: 200px;
+    height: 35px;
+}
+#logo_apple{
+    height: 100px;
+}
+.card-title{
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 800;
+}
+.card-body{
+    text-align: center;
+}

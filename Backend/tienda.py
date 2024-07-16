@@ -31,12 +31,16 @@ def productos(tipo):
                 'descripcion': producto.descripcion,
                 'procesador': producto.procesador,
                 'memoria': producto.memoria,
-                'camara delantera': producto.camara_delantera,
-                'camara trasera': producto.camara_trasera,
+                'camara_delantera': producto.camara_delantera,
+                'camara_trasera': producto.camara_trasera,
                 'pantalla': producto.pantalla,
                 'bateria': producto.bateria,
                 'precio': producto.precio,
-                'financiacion': producto.financiacion.nombre if producto.financiacion else None,
+                'financiacion': {
+                    'nombre': producto.financiacion_plan.nombre,
+                    'cuotas': producto.financiacion_plan.cuotas,
+                    'intereses': producto.financiacion_plan.intereses
+                } if producto.financiacion_plan else None,
                 'imagen': producto.imagen_url
             }
             listado_de_productos.append(producto_info)
@@ -66,12 +70,16 @@ def producto_por_id(tipo, id_producto):
             'descripcion': producto.descripcion,
             'procesador': producto.procesador,
             'memoria': producto.memoria,
-            'camara delantera': producto.camara_delantera,
-            'camara trasera': producto.camara_trasera,
+            'camara_delantera': producto.camara_delantera,
+            'camara_trasera': producto.camara_trasera,
             'pantalla': producto.pantalla,
             'bateria': producto.bateria,
             'precio': producto.precio,
-            'financiacion': producto.financiacion.nombre if producto.financiacion else None,
+            'financiacion': {
+                'nombre': producto.financiacion_plan.nombre,
+                'cuotas': producto.financiacion_plan.cuotas,
+                'intereses': producto.financiacion_plan.intereses
+            } if producto.financiacion_plan else None,
             'imagen': producto.imagen_url
         }
 
