@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS 
 from modelos import db, Celular, Tablet, Notebook, Plan
+from modelos import Producto
 
 app = Flask(__name__)
 CORS(app)  
@@ -108,6 +109,91 @@ def planes_financiamiento():
 
     except Exception as e:
         return jsonify(f"Error al intentar mostrar los planes de financiamiento: {str(e)}"), 500
+    
+# En tienda.py
+@app.route('/productos', methods=['POST'])
+def crear_producto():
+    try:
+        data = request.json
+        nuevo_producto = Producto(
+            nombre=data['nombre'],
+            descripcion=data['descripcion'],
+            precio=data['precio'],
+            imagen_url=data['imagen_url']
+        )
+        db.session.add(nuevo_producto)
+        db.session.commit()
+        return jsonify({'mensaje': 'Producto creado exitosamente'}), 201
+    except Exception as e:
+        return jsonify(f"Error al crear el producto: {str(e)}"), 500
+
+@app.route('/productos', methods=['GET'])
+def obtener_productos():
+    try:
+        productos = Producto.query.all()
+        listado_productos = []
+        for producto in productos:
+            producto_info = {
+                'id': producto.id,
+                'nombre': producto.nombre,
+                'descripcion': producto.descripcion,
+                'precio': producto.precio,
+                'imagen_url': producto.imagen_url
+            }
+            listado_productos.append(producto_info)
+        return jsonify(listado_productos)
+    except Exception as e:
+        return jsonify(f"Error al obtener los productos: {str(e)}"), 500
+
+@app.route('/productos/<int:id>', methods=['GET'])
+def obtener_producto_por_id(id):
+    try:
+        producto = Producto.query.get(id)
+        if not producto:
+            return jsonify('Producto no encontrado'), 404
+
+        producto_info = {
+            'id': producto.id,
+            'nombre': producto.nombre,
+            'descripcion': producto.descripcion,
+            'precio': producto.precio,
+            'imagen_url': producto.imagen_url
+        }
+        return jsonify(producto_info)
+    except Exception as e:
+        return jsonify(f"Error al obtener el producto: {str(e)}"), 500
+
+@app.route('/productos/<int:id>', methods=['PUT'])
+def actualizar_producto(id):
+    try:
+        producto = Producto.query.get(id)
+        if not producto:
+            return jsonify('Producto no encontrado'), 404
+
+        data = request.json
+        producto.nombre = data['nombre']
+        producto.descripcion = data['descripcion']
+        producto.precio = data['precio']
+        producto.imagen_url = data['imagen_url']
+
+        db.session.commit()
+        return jsonify({'mensaje': 'Producto actualizado exitosamente'}), 200
+    except Exception as e:
+        return jsonify(f"Error al actualizar el producto: {str(e)}"), 500
+
+@app.route('/productos/<int:id>', methods=['DELETE'])
+def borrar_producto(id):
+    try:
+        producto = Producto.query.get(id)
+        if not producto:
+            return jsonify('Producto no encontrado'), 404
+
+        db.session.delete(producto)
+        db.session.commit()
+        return jsonify({'mensaje': 'Producto eliminado exitosamente'}), 200
+    except Exception as e:
+        return jsonify(f"Error al eliminar el producto: {str(e)}"), 500
+
 
 
 if __name__ == '__main__':

@@ -3,6 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class Producto(db.Model):
+    __tablename__ = 'productos'
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(20), nullable=False)
+    descripcion = db.Column(db.String(500))
+    precio = db.Column(db.Float, nullable=False)
+    imagen_url = db.Column(db.String(100), nullable=False)
+
 class Plan(db.Model):
     __tablename__ = 'planes_de_financiacion'
     id = db.Column(db.Integer, primary_key=True)
