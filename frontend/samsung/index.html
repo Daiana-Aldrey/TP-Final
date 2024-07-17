@@ -56,7 +56,7 @@
 
                 const card = document.createElement("a")
                 card.setAttribute("class", "card")
-                card.setAttribute("href",`/producto?id=${contenido[indice].id}`)
+                card.setAttribute("href",`/producto?id=${contenido[indice].id}&modelo=${encodeURIComponent(contenido[indice].modelo)}`);
               
                 const imagen = document.createElement("img")
                 imagen.setAttribute("class", "card-body")
@@ -75,7 +75,7 @@
             }
         }
 
-       fetch("http://localhost:5000/samsung/celulares")
+       fetch("http://localhost:5000/Samsung/celulares")
             .then(mostrar_datos)
             .then(function (contenido) {
                 const id_lista = "lista_celulares";
@@ -83,7 +83,7 @@
             })
             .catch(mostrar_error); 
 
-        fetch("http://localhost:5000/samsung/tablets/")
+        fetch("http://localhost:5000/Samsung/tablets")
             .then(mostrar_datos)
             .then(function (contenido) {
                 const id_lista = "lista_tablets";
@@ -91,7 +91,7 @@
             })
             .catch(mostrar_error);
 
-        fetch("http://localhost:5000/samsung/notebooks/")
+        fetch("http://localhost:5000/Samsung/notebooks")
             .then(mostrar_datos)
             .then(function (contenido) {
                 const id_lista = "lista_notebooks";

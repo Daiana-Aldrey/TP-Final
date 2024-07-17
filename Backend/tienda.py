@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS 
 from modelos import db, Celular,Tablet, Notebook, Plan
-from filtrar_productos import filtrar_productos_por_marca, filtrar_notebooks_por_marca, filtrar_producto_por_id, filtrar_notebook_por_id
+from filtrar_productos import filtrar_productos_por_marca, filtrar_producto_por_id, filtrar_notebook_por_id
 
 SAMSUNG = "Samsung"
 APPLE = "Apple"
@@ -21,73 +21,78 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 def hello_world():
     return 'Hello world!'
 
-@app.route("/samsung/celulares/")
-def celulares_samsung():
-    return filtrar_productos_por_marca(Celular, SAMSUNG)
-
-@app.route("/samsung/tablets/")
-def tablets_samsung():
-    return filtrar_productos_por_marca(Tablet, SAMSUNG)
-
-@app.route("/samsung/notebooks/")
-def notebooks_samsung():
-    return filtrar_notebooks_por_marca(SAMSUNG)    
-
-@app.route("/apple/celulares/")
-def celulares_apple():
-    return filtrar_productos_por_marca(Celular, APPLE)
-
-@app.route("/apple/tablets/")
-def tablets_apple():
-    return filtrar_productos_por_marca(Tablet, APPLE)
-
-@app.route("/apple/notebooks/")
-def notebooks_apple():
-    return filtrar_notebooks_por_marca(APPLE)    
-
-@app.route("/xiaomi/celulares/")
-def celulares_sxiaomi():
-    return filtrar_productos_por_marca(Celular, XIAOMI)
-
-@app.route("/xiaomi/tablets/")
-def tablets_xiaomi():
-    return filtrar_productos_por_marca(Tablet, XIAOMI)
-
-@app.route("/xiaomi/notebooks/")
-def notebooks_xiaomi():
-    return filtrar_notebooks_por_marca(XIAOMI)     
-      
-
-@app.route("/celulares/") #muestra todos los celulares
-def celulares():
+@app.route("/comprar/<nombre>")
+def mostrar_productos(nombre):
     try:
-        celulares = Celular.query.all()
+        if nombre == 'Celular':
+            productos= Celular.query.all()
+        elif nombre == 'Tablet':
+            productos = Tablet.query.all()
+        elif nombre == 'Notebook':
+            productos = Notebook.query.all()
+        #elif not nombre:
+            #productos = <Acá hay que hacer un join de todas las tablas>
+    
         listado_de_productos = []
-        for celular in celulares:
-            celular_informacion = {
-            'id': celular.id,
-            'marca': celular.marca,
-            'modelo': celular.modelo,
-            'procesador' : celular.procesador,
-            'memoria' : celular.memoria,
-            'camara delantera': celular.camara_delantera,
-            'camara trasera' : celular.camara_trasera,
-            'bateria' : celular.bateria,
-            'pantalla' : celular.pantalla,
-            'precio': celular.precio,
-            'plan de financiamiento': celular.financiacion,
-            'descripcion': celular.descripcion,
-            'imagen': celular.imagen_url
+        for producto in productos:
+            producto_informacion = {
+                'id': producto.id,
+                'marca': producto.marca,
+                'modelo': producto.modelo,
+                'precio': producto.precio,
+                'plan de financiamiento': producto.financiacion,
+                'imagen': producto.imagen_url
             }
 
-            listado_de_productos.append(celular_informacion)
-
+            listado_de_productos.append(producto_informacion)
         return jsonify(listado_de_productos)
 
     except Exception as e:
-        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500        
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500     
+
+
+@app.route("/comprar/<nombre>/<marca>")
+def filtrar_por_marca(nombre, marca):
+    try:
+        if nombre == 'Celular':
+            productos= Celular.query.filter_by(marca=marca).all()
+        elif nombre == 'Tablet':
+            productos = Tablet.query.filter_by(marca=marca).all()
+        elif nombre == 'Notebook':
+            productos = Notebook.query.filter_by(marca=marca).all()
+        #elif not nombre:
+            #productos = <Acá hay que hacer un join de todas las tablas>
 
         
+        listado_de_productos = []
+        for producto in productos:
+            producto_informacion = {
+                'id': producto.id,
+                'marca': producto.marca,
+                'modelo': producto.modelo,
+                'precio': producto.precio,
+                'plan de financiamiento': producto.financiacion,
+                'imagen': producto.imagen_url
+            }
+
+            listado_de_productos.append(producto_informacion)
+        return jsonify(listado_de_productos)
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500     
+
+@app.route("/<marca>/celulares", methods=['GET'])
+def filtrar_celulares(marca):
+    return filtrar_productos_por_marca(Celular, marca)
+
+@app.route("/<marca>/tablets", methods=['GET'])
+def filtrar_tablets(marca):
+    return filtrar_productos_por_marca(Tablet, marca)    
+
+@app.route("/<marca>/notebooks", methods=['GET'])
+def filtrar_notebooks(marca):
+    return filtrar_productos_por_marca(Notebook, marca)
+
 
 @app.route("/producto/<id_producto>/<modelo>", methods=["GET"])
 def producto(id_producto, modelo):
@@ -121,7 +126,41 @@ def producto(id_producto, modelo):
 
     except Exception as e:
         # Maneja cualquier error inesperado
-        return jsonify(f"Error al mostrar el producto: {str(e)}"), 500
+        return jsonify(f"Error al mostrar el producto: {str(e)}"), 500    
+  
+
+@app.route("/celulares/") #muestra todos los celulares
+def celulares():
+    try:
+        celulares = Celular.query.all()
+        listado_de_productos = []
+        for celular in celulares:
+            celular_informacion = {
+            'id': celular.id,
+            'marca': celular.marca,
+            'modelo': celular.modelo,
+            'procesador' : celular.procesador,
+            'memoria' : celular.memoria,
+            'camara delantera': celular.camara_delantera,
+            'camara trasera' : celular.camara_trasera,
+            'bateria' : celular.bateria,
+            'pantalla' : celular.pantalla,
+            'precio': celular.precio,
+            'plan de financiamiento': celular.financiacion,
+            'descripcion': celular.descripcion,
+            'imagen': celular.imagen_url
+            }
+
+            listado_de_productos.append(celular_informacion)
+
+        return jsonify(listado_de_productos)
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500        
+
+        
+
+
 
 
 
