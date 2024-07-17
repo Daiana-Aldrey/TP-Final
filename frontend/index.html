@@ -41,10 +41,10 @@
             </div>
         </section>
     
-        <p>Explora nuestra plataforma para vender tu dispositivo móvil, tableta o computadora, o adquirir uno nuevo de nuestro catálogo en tan solo dos pasos.</p>-->
+        <p>Explora nuestra plataforma para vender tu dispositivo móvil, tableta o computadora, o adquirir uno nuevo de nuestro catálogo en tan solo dos pasos.</p>
+    </div>-->
+    <div class="container">
         <h2>MARCAS DISPONIBLES</h2>
-    </div>
-     <div class="container">
         <div class="row align-items-center">
             <div class="col-4">
                 <a href="http://localhost:8000/xiaomi">
@@ -64,6 +64,7 @@
         </div>
     </div>
     <div class="container">
+        <h2>EL MEJOR FINANCIAMIENTO</h2>
         <div class="row align-items-center" id="destacados">
         </div>
     </div>
@@ -92,14 +93,14 @@
         function parse_datos(contenido){
             console.log(contenido)
             const container = document.getElementById("destacados");
-            for (let index = 5; index > 2; index--) {
+            for (let index = 0; index < contenido.length; index++) {
                 const item = document.createElement("div");
-                item.setAttribute("class", "col-4");
+                item.setAttribute("class", "col-6 col-md-4 col-lg-3 col-xlg-2");
 
                 const card = document.createElement("a");
                 card.setAttribute("class", "card text-decoration-none mx-auto d-block");
-                card.setAttribute("style", "width: 50%;");
-                card.setAttribute("href", `/producto?id=${contenido[index].id}`);
+                card.setAttribute("style", "width: 80%;");
+                card.setAttribute("href", `/producto?id=${contenido[index].id}&modelo=${encodeURIComponent(contenido[index].modelo)}`);
 
                 const image = document.createElement("img");
                 image.setAttribute("class", "card-img-top");
@@ -111,7 +112,7 @@
                 const card_body = document.createElement("div");
                 card_body.setAttribute("class", "card-body");
 
-                card_title.append('PRODUCTO DESTACADO');
+                card_title.append('FINANCIAMIENTO ELITE');
                 card_body.append(contenido[index].marca + ' ');
                 card_body.append(contenido[index].modelo);
                 card.append(image);

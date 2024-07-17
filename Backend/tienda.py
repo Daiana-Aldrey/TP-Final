@@ -12,8 +12,8 @@ CORS(app) #donde esta el entorno virtual intalar -> pip install flask-cors para 
 
 port = 5000
 #conecto la base de datos //usario_bd:contraseña@localhost:5432/nombre_bd
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:1215308@localhost:5432/tienda_online' 
-#app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online'
+#app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:1215308@localhost:5432/tienda_online' 
+app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 
@@ -132,26 +132,33 @@ def producto(id_producto, modelo):
 @app.route("/celulares/") #muestra todos los celulares
 def celulares():
     try:
-        celulares = Celular.query.all()
+        #productos= []
+        #celulares= Celular.query.filter_by(financiacion=4).all()
+        #tablets= Tablet.query.filter_by(financiacion=4).all()
+        #notebooks= Notebook.query.filter_by(financiacion=4).all()
         listado_de_productos = []
-        for celular in celulares:
-            celular_informacion = {
-            'id': celular.id,
-            'marca': celular.marca,
-            'modelo': celular.modelo,
-            'procesador' : celular.procesador,
-            'memoria' : celular.memoria,
-            'camara delantera': celular.camara_delantera,
-            'camara trasera' : celular.camara_trasera,
-            'bateria' : celular.bateria,
-            'pantalla' : celular.pantalla,
-            'precio': celular.precio,
-            'plan de financiamiento': celular.financiacion,
-            'descripcion': celular.descripcion,
-            'imagen': celular.imagen_url
-            }
+        lista= [Celular, Tablet, Notebook]
+        for clase in lista:
+            productos= clase.query.filter_by(financiacion=4).all()
 
-            listado_de_productos.append(celular_informacion)
+            for producto in productos:
+                producto_informacion = {
+                'id': producto.id,
+                'marca': producto.marca,
+                'modelo': producto.modelo,
+                # 'procesador' : producto.procesador,
+                # 'memoria' : producto.memoria,
+                # 'camara delantera': producto.camara_delantera,
+                # 'camara trasera' : producto.camara_trasera,
+                # 'bateria' : producto.bateria,
+                # 'pantalla' : producto.pantalla,
+                # 'precio': producto.precio,
+                # 'plan de financiamiento': producto.financiacion,
+                # 'descripcion': producto.descripcion,
+                'imagen': producto.imagen_url
+                }
+
+                listado_de_productos.append(producto_informacion)
 
         return jsonify(listado_de_productos)
 
