@@ -108,6 +108,32 @@ def planes_financiamiento():
 
     except Exception as e:
         return jsonify(f"Error al intentar mostrar los planes de financiamiento: {str(e)}"), 500
+        
+@app.route('/disponibilidad/<categoria>', methods=['GET'])
+def disponibilidad(categoria):
+    try:
+        if categoria == 'celular':
+            productos = Celular.query.all()
+        elif categoria == 'tablet':
+            productos = Tablet.query.all()
+        elif categoria == 'computador':
+            productos = Computador.query.all()
+        else:
+            return jsonify({"error": "Categoría no válida"}), 400
+        
+        disponibilidad = []
+        for producto in productos:
+            disponibilidad.append({
+                'id': producto.id,
+                'marca': producto.marca,
+                'modelo': producto.modelo,
+                'disponible': producto.disponible
+            })
+
+        return jsonify(disponibilidad)
+
+    except Exception as e:
+        return jsonify(f"Error al obtener la disponibilidad de productos: {str(e)}"), 500
 
 
 if __name__ == '__main__':
