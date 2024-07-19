@@ -54,9 +54,10 @@
                 const elemento = document.createElement("div");
                 elemento.classList.add("list-inline-item"); // Agrega clase de Bootstrap para items
 
-                const card = document.createElement("div")
+                const card = document.createElement("a")
                 card.setAttribute("class", "card")
-               
+                card.setAttribute("href",`/producto?id=${contenido[indice].id}&modelo=${encodeURIComponent(contenido[indice].modelo)}`);
+              
                 const imagen = document.createElement("img")
                 imagen.setAttribute("class", "card-body")
                 imagen.setAttribute("src", contenido[indice].imagen)
@@ -74,7 +75,8 @@
             }
         }
 
-       fetch("http://localhost:5000/apple/celulares")
+
+       fetch("http://localhost:5000/Apple/celulares")
             .then(mostrar_datos)
             .then(function (contenido) {
                 const id_lista = "lista_celulares";
@@ -82,7 +84,7 @@
             })
             .catch(mostrar_error); 
 
-        fetch("http://localhost:5000/apple/tablets/")
+        fetch("http://localhost:5000/Apple/tablets")
             .then(mostrar_datos)
             .then(function (contenido) {
                 const id_lista = "lista_tablets";
@@ -90,7 +92,7 @@
             })
             .catch(mostrar_error);
 
-        fetch("http://localhost:5000/apple/notebooks/")
+        fetch("http://localhost:5000/Apple/notebooks")
             .then(mostrar_datos)
             .then(function (contenido) {
                 const id_lista = "lista_notebooks";
