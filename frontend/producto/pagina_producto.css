@@ -1,0 +1,23 @@
+img{
+    max-width: 400px;
+    max-height: 600px;
+}
+#mensaje-exito {
+    background-color: #dff0d8;
+    color: yellow;
+    padding: 10px 20px;
+    border: 1px solid #d6e9c6;
+    border-radius: 3px;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+#botones{
+    margin-top: 1em;
+    width: fit-content;
+}
