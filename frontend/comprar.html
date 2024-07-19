@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprar</title>
+    <title>Compra tu dispositivo</title>
     <link rel="stylesheet" href="css/pagina_comprar.css">
 </head>
 <body>
     <header>
-        <h1>COMPRA NUEVO</h1>
+        <h1>Compra tu dispositivo</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Volver a página de inicio</a></li>
+                <li><a href="index.html">Inicio</a></li>
                 <li><a href="vender.html">Vender usado</a></li>
             </ul>
         </nav>
@@ -31,9 +31,6 @@
         <form id="comprar_form" onsubmit="return mostrarMensaje()">
             <label for="marca">Marca:</label>
             <select name="marca" id="marca" required>
-                <option value="xiaomi">Xiaomi</option>
-                <option value="samsung">Samsung</option>
-                <option value="apple">Apple</option>
             </select>
 
             <label for="modelo">Modelo:</label>
@@ -60,7 +57,20 @@
         function mostrarFormulario(categoria) {
             document.getElementById('seleccion-inicial').style.display = 'none';
             document.getElementById('formulario-compra').style.display = 'block';
-            document.getElementById('categoria').value = categoria;
+
+            fetch(`http://localhost:5000/categorias/${categoria}`)
+                .then(response => response.json())
+                .then(data => {
+                    const marcaSelect = document.getElementById('marca');
+                    marcaSelect.innerHTML = '';
+                    data.marcas.forEach(marca => {
+                        const option = document.createElement('option');
+                        option.value = marca;
+                        option.textContent = marca;
+                        marcaSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error al obtener marcas:', error));
         }
 
         function mostrarMensaje() {
