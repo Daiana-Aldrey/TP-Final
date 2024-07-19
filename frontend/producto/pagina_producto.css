@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+img{
+    max-height: 400px;
+    max-width: 100%;
+}
+#modelo{
+    padding: 1em;
+    background-color: #0d6efd;
+    color: white;
+}
+#descripcion, #titulo-desc{
+    margin-left: 10px;
+}
+#precio{
+    font-size: xx-large;
+    margin: 0;
+}
+
