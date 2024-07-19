@@ -135,6 +135,26 @@ def disponibilidad(categoria):
     except Exception as e:
         return jsonify(f"Error al obtener la disponibilidad de productos: {str(e)}"), 500
 
+@app.route('/modelos/<categoria>/<marca>', methods=['GET'])
+def obtener_modelos(categoria, marca):
+    try:
+        if categoria == 'celular':
+            productos = Celular.query.filter_by(marca=marca).all()
+        elif categoria == 'tablet':
+            productos = Tablet.query.filter_by(marca=marca).all()
+        elif categoria == 'notebook':
+            productos = Notebook.query.filter_by(marca=marca).all()
+        else:
+            return jsonify({"error": "Categoría no válida"}), 400
+        
+        modelos = []
+        for producto in productos:
+            modelos.append(producto.modelo)
+
+        return jsonify({"modelos": modelos})
+    except Exception as e:
+        return jsonify(f"Error al obtener los modelos: {str(e)}"), 500
+
 @app.route('/categorias/<categoria>', methods=['GET'])
 def obtener_marcas(categoria):
     try:

@@ -16,6 +16,41 @@ function mostrarFormulario(categoria) {
         })
         .catch(error => console.error('Error al obtener marcas:', error));
 }
+function mostrarFormulario(categoria) {
+    document.getElementById('seleccion-inicial').style.display = 'none';
+    document.getElementById('formulario-compra').style.display = 'block';
+
+    fetch(`http://localhost:5000/disponibilidad/${categoria}`)
+        .then(response => response.json())
+        .then(data => {
+            const marcaSelect = document.getElementById('marca');
+            marcaSelect.innerHTML = '';
+            data.forEach(producto => {
+                const option = document.createElement('option');
+                option.value = producto.marca;
+                option.textContent = producto.marca;
+                marcaSelect.appendChild(option);
+            });
+
+            marcaSelect.addEventListener('change', () => {
+                const selectedMarca = marcaSelect.value;
+                fetch(`http://localhost:5000/modelos/${categoria}/${selectedMarca}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const modeloSelect = document.getElementById('modelo');
+                        modeloSelect.innerHTML = '';
+                        data.modelos.forEach(modelo => {
+                            const option = document.createElement('option');
+                            option.value = modelo;
+                            option.textContent = modelo;
+                            modeloSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error al obtener los modelos:', error));
+            });
+        })
+        .catch(error => console.error('Error al obtener marcas:', error));
+}
 
 function mostrarMensaje() {
     document.getElementById('mensaje-exito').style.display = 'block';
