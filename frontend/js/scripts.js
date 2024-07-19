@@ -6,7 +6,7 @@ function mostrarFormulario(categoria) {
         .then(response => response.json())
         .then(data => {
             const marcaSelect = document.getElementById('marca');
-            marcaSelect.innerHTML = '';
+            marcaSelect.innerHTML = ''; 
             data.marcas.forEach(marca => {
                 const option = document.createElement('option');
                 option.value = marca;

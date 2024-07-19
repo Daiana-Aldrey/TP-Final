@@ -135,6 +135,26 @@ def disponibilidad(categoria):
     except Exception as e:
         return jsonify(f"Error al obtener la disponibilidad de productos: {str(e)}"), 500
 
+@app.route('/categorias/<categoria>', methods=['GET'])
+def obtener_marcas(categoria):
+    try:
+        if categoria == 'celular':
+            productos = Celular.query.all()
+        elif categoria == 'tablet':
+            productos = Tablet.query.all()
+        elif categoria == 'laptop':
+            productos = Notebook.query.all()
+        else:
+            return jsonify({"error": "Categoría no válida"}), 400
+
+        marcas = set()
+        for producto in productos:
+            marcas.add(producto.marca)
+
+        return jsonify({"marcas": list(marcas)})
+
+    except Exception as e:
+        return jsonify({"error": f"Error al obtener marcas: {str(e)}"}), 500
 
 if __name__ == '__main__':
     print('Starting server...') 
