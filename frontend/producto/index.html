@@ -87,7 +87,7 @@
             precio.append(producto.precio)
             const especificaciones = document.getElementById("especificaciones")
             for (let key in producto) {
-                if (key !=='modelo' && key !=='imagen' && key !=='marca' && key !=='descripcion' && key !=='id' && key!== 'plan de financiamiento') {
+                if (key !=='modelo' && key !=='imagen' && key !=='marca' && key !=='descripcion' && key !=='id' && key!=='precio' && key!== 'plan de financiamiento') {
                     const especificacion = document.createElement('p')
                     especificacion.innerHTML = `<strong>${key}:</strong> ${producto[key]}`
                     especificaciones.appendChild(especificacion)

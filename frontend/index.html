@@ -87,11 +87,7 @@
             </ul>
         </div>
     </div>
-    <!--<div class="container">
-        <h2>EL MEJOR FINANCIAMIENTO</h2>
-        <div class="row align-items-center" id="destacados">
-        </div>
-    </div> -->
+  
     <div class="alert alert-info">
         <footer>        
             <p> Este sitio web es únicamente para propósitos educativos. La información proporcionada 
@@ -163,58 +159,6 @@
             })
             .catch(mostrar_error);
 
-        /*
-        function mostrar_datos(datos){
-            console.log("Exito")
-            console.log(datos)
-
-            return datos.json()
-        }
-
-        function mostrar_error(error){
-            console.log("Error")
-            console.log(error)
-        }
-
-        function parse_datos(contenido){
-            console.log(contenido)
-            const container = document.getElementById("destacados");
-            for (let index = 0; index < contenido.length; index++) {
-                const item = document.createElement("div");
-                item.setAttribute("class", "col-6 col-md-4 col-lg-3 col-xlg-2");
-
-                const card = document.createElement("a");
-                card.setAttribute("class", "card text-decoration-none mx-auto d-block");
-                card.setAttribute("style", "width: 80%;");
-                card.setAttribute("href", `/producto?id=${contenido[index].id}&modelo=${encodeURIComponent(contenido[index].modelo)}`);
-
-                const image = document.createElement("img");
-                image.setAttribute("class", "card-img-top");
-                image.setAttribute("src", contenido[index].imagen)
-
-                const card_title = document.createElement("div");
-                card_title.setAttribute("class", "card-title");
-
-                const card_body = document.createElement("div");
-                card_body.setAttribute("class", "card-body");
-
-                card_title.append('FINANCIAMIENTO ELITE');
-                card_body.append(contenido[index].marca + ' ');
-                card_body.append(contenido[index].modelo);
-                card.append(image);
-                card.append(card_title);
-                card.append(card_body);
-                item.append(card);
-
-                container.append(item);
-            }
-        }
-
-        fetch("http://localhost:5000/celulares/") // el fetch es como cun curl que hace una request a lo que se le pasa
-            .then(mostrar_datos) //proporciona informacion del request
-            .then(parse_datos) // recibe el contenido del request
-            .catch(mostrar_error)  // si algo sale mal el catch ejecuta la funcion de adentro
-        */
     </script>   
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
