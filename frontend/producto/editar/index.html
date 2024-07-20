@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vende tu usado</title>
+        <link rel="stylesheet" href="pagina_editar.css">
+    </head>
+    <body>
+        <header>
+            <h1>VENDE TU USADO</h1>
+            <nav>
+                <ul>
+                    <li><a href="http://localhost:8000/comprar?nombre=Usado">Volver</a></li>
+                    <li><a href="comprar.html">Comprar nuevo</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div id="mensaje-exito" style="display: none;">¡Producto editado!</div>
+
+        <main>
+            <h2>Formulario de venta</h2>
+            <form id="vender_form" onsubmit="editar_producto(event)">
+                <label for="categoria">Categoría:</label>
+                <select name="categoria" id="categoria" required>
+                    <option value="celular">Celular</option>
+                    <option value="tablet">Tablet</option>
+                    <option value="computador">Computador</option>
+                </select>
+
+                <label for="marca">Marca:</label>
+                <select name="marca" id="marca" required>
+                    <option value="xiaomi">Xiaomi</option>
+                    <option value="samsung">Samsung</option>
+                    <option value="apple">Apple</option>
+                </select>
+                
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" name="modelo">
+
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio">
+
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" name="descripcion">
+
+                <label for="foto">Foto del dispositivo(link):</label>
+                <input type="text" id="foto" name="foto" required> 
+
+                <button type="submit">Editar</button>
+            </form>
+        </main>
+        <script>
+            const parametros = new URLSearchParams(window.location.search)  /// trae todos los parametros de la url
+            const id = parametros.get("id")
+            
+            if (id === null){
+                window.location.href = "/comprar?nombre=Usado"
+            }
+
+            function mostrar_error(error){
+                console.log("ERROR", error)
+            }
+
+            function recibir_datos(datos){
+                document.getElementById("categoria").value = datos.categoria
+                document.getElementById("marca").value = datos.marca
+                document.getElementById("modelo").value = datos.modelo
+                document.getElementById("precio").value = datos.precio
+                document.getElementById("descripcion").value = datos.descripcion
+                document.getElementById("foto").value = datos.imagen_url
+            }
+
+            fetch(`http://localhost:5000/productos/${id}`)
+                .then((res) => res.json())
+                .then(recibir_datos)
+                .catch(mostrar_error)
+
+            function red_response(data){
+                document.getElementById('mensaje-exito').style.display = 'block';
+                console.log(data)
+            }
+
+            function editar_producto(evento){
+                event.preventDefault();
+            
+                const formdata = new FormData(event.target);
+
+                const categoria = formdata.get("categoria");
+                const marca = formdata.get("marca");
+                const modelo = formdata.get("modelo");
+                const precio = formdata.get("precio");
+                const descripcion = formdata.get("descripcion")
+                const foto = formdata.get("foto")
+                console.log(categoria, marca, modelo, precio, descripcion, foto);
+
+                fetch(`http://localhost:5000/productos/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        categoria: categoria,
+                        marca: marca,
+                        modelo: modelo,
+                        precio: precio,
+                        descripcion: descripcion,
+                        imagen_url: foto
+                    }),
+                })
+                .then((res) => res.json())
+                .then(red_response)
+                .catch(mostrar_error)
+            }
+        </script>
+    </body>
+</html>

@@ -11,8 +11,8 @@
         <h1>VENDE TU USADO</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Volver a página de inicio</a></li>
-                <li><a href="comprar.html">Comprar nuevo</a></li>
+                <li><a href="http://localhost:8000/">Volver a página de inicio</a></li>
+                <li><a href="http://localhost:8000/comprar">Comprar nuevo</a></li>
             </ul>
         </nav>
     </header>
@@ -21,7 +21,7 @@
 
     <main>
         <h2>Formulario de venta</h2>
-        <form id="vender_form" onsubmit="return mostrarMensaje()">
+        <form id="vender_form" onsubmit="crear_producto(event)">
             <label for="categoria">Categoría:</label>
             <select name="categoria" id="categoria" required>
                 <option value="celular">Celular</option>
@@ -45,8 +45,8 @@
             <label for="descripcion">Descripción:</label>
             <input type="text" id="descripcion" name="descripcion">
 
-            <label for="foto">Foto del dispositivo:</label>
-            <input type="file" id="foto" name="foto" accept="image/*" required> 
+            <label for="foto">Foto del dispositivo(link):</label>
+            <input type="text" id="foto" name="foto" required> 
 
             <button type="submit">Enviar</button>
         </form>
@@ -56,7 +56,47 @@
         function mostrarMensaje() {
             document.getElementById('mensaje-exito').style.display = 'block';
             document.getElementById('vender_form').reset();
-            return false;
+            return;
+        }
+        function red_response(data){
+            mostrarMensaje();
+            console.log(data);
+        }
+        function mostrar_error(error) {
+            console.log("Error");
+            console.log(error);
+        }
+
+        function crear_producto(event){
+            event.preventDefault();
+            
+            const formdata = new FormData(event.target);
+
+            const categoria = formdata.get("categoria");
+            const marca = formdata.get("marca");
+            const modelo = formdata.get("modelo");
+            const precio = formdata.get("precio");
+            const descripcion = formdata.get("descripcion")
+            const foto = formdata.get("foto")
+            console.log(categoria, marca, modelo, precio, descripcion, foto);
+
+            fetch("http://localhost:5000/productos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    categoria: categoria,
+                    marca: marca,
+                    modelo: modelo,
+                    precio: precio,
+                    descripcion: descripcion,
+                    imagen_url: foto
+                }),
+            })
+            .then((res) => res.json())
+            .then(red_response)
+            .catch(mostrar_error)
         }
     </script>
 </body>

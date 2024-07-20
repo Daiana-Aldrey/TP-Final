@@ -72,7 +72,7 @@ h2{
 .card{
     margin: 1em;
 }
-.card-title{
+.card-body{
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: 800;
