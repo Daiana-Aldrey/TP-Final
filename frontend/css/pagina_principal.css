@@ -88,3 +88,6 @@ h2{
 .alert{
     margin-top: 1em;
 }
+.container p {
+   font-size: xx-large;
+}

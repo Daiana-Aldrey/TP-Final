@@ -63,11 +63,31 @@
             </div>
         </div>
     </div>
+
     <div class="container">
-        <h2>EL MEJOR FINANCIAMIENTO</h2>
-        <div class="row align-items-center" id="destacados">
+        <p>~Productos Premium~</p>
+        <div class="row row-cols-auto g-4" id="premium">
+            <ul id="lista_premium" class="list-inline">
+            </ul>
         </div>
     </div>
+
+    <div class="container">
+        <p>~Mejores precios~</p>
+        <div class="row row-cols-auto" id="mejores_precios">
+            <ul id="lista_mejores_precios" class="list-inline">
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <p>~Mejores Financiamientos~</p>
+        <div class="row row-cols-auto" id="mejores_financiamientos">
+            <ul id="lista_mejores_planes" class="list-inline">
+            </ul>
+        </div>
+    </div>
+  
     <div class="alert alert-info">
         <footer>        
             <p> Este sitio web es únicamente para propósitos educativos. La información proporcionada 
@@ -77,57 +97,67 @@
             </footer>
     </div>
     <script>
-
-        function mostrar_datos(datos){
-            console.log("Exito")
-            console.log(datos)
-
-            return datos.json()
+        function mostrar_datos(datos) {
+            console.log("Exito");
+            console.log(datos);
+            return datos.json();
         }
 
-        function mostrar_error(error){
-            console.log("Error")
-            console.log(error)
+        function mostrar_error(error) {
+            console.log("Error");
+            console.log(error);
         }
 
-        function parse_datos(contenido){
-            console.log(contenido)
-            const container = document.getElementById("destacados");
-            for (let index = 0; index < contenido.length; index++) {
-                const item = document.createElement("div");
-                item.setAttribute("class", "col-6 col-md-4 col-lg-3 col-xlg-2");
+        function parse_datos(contenido, id_lista) {
+            console.log("Contenido completo:", contenido);
+            const container = document.getElementById(id_lista);
+            for (let indice = 0; indice < contenido.length; indice++) {
+                const elemento = document.createElement("div");
+                elemento.classList.add("list-inline-item"); 
 
-                const card = document.createElement("a");
-                card.setAttribute("class", "card text-decoration-none mx-auto d-block");
-                card.setAttribute("style", "width: 80%;");
-                card.setAttribute("href", `/producto?id=${contenido[index].id}&modelo=${encodeURIComponent(contenido[index].modelo)}`);
+                const card = document.createElement("a")
+                card.setAttribute("class", "card")
+                card.setAttribute("href",`/producto?id=${contenido[indice].id}&modelo=${encodeURIComponent(contenido[indice].modelo)}`);
+              
+                const imagen = document.createElement("img")
+                imagen.setAttribute("class", "card-body")
+                imagen.setAttribute("src", contenido[indice].imagen)
+                console.log("Imagen URL:", contenido[indice].imagen)
 
-                const image = document.createElement("img");
-                image.setAttribute("class", "card-img-top");
-                image.setAttribute("src", contenido[index].imagen)
+                const card_body = document.createElement("div")
+                card_body.setAttribute("class", "card_body")
 
-                const card_title = document.createElement("div");
-                card_title.setAttribute("class", "card-title");
+                card_body.textContent = `${contenido[indice].modelo}  $${contenido[indice].precio}`;
 
-                const card_body = document.createElement("div");
-                card_body.setAttribute("class", "card-body");
-
-                card_title.append('FINANCIAMIENTO ELITE');
-                card_body.append(contenido[index].marca + ' ');
-                card_body.append(contenido[index].modelo);
-                card.append(image);
-                card.append(card_title);
-                card.append(card_body);
-                item.append(card);
-
-                container.append(item);
+                card.append(imagen)
+                card.append(card_body)
+                elemento.append(card)
+                
+                container.append(elemento)
             }
         }
 
-        fetch("http://localhost:5000/celulares/") // el fetch es como cun curl que hace una request a lo que se le pasa
-            .then(mostrar_datos) //proporciona informacion del request
-            .then(parse_datos) // recibe el contenido del request
-            .catch(mostrar_error)  // si algo sale mal el catch ejecuta la funcion de adentro
+       fetch("http://localhost:5000/mejores_precios")
+            .then(mostrar_datos)
+            .then(function (contenido) {
+                const id_lista = "lista_mejores_precios";
+                parse_datos(contenido, id_lista);
+            })
+            .catch(mostrar_error); 
+        fetch("http://localhost:5000/productos_premium")
+            .then(mostrar_datos)
+            .then(function (contenido) {
+                const id_lista = "lista_premium";
+                parse_datos(contenido, id_lista);
+            })
+            .catch(mostrar_error);   
+        fetch("http://localhost:5000/mejores_financiamientos")
+            .then(mostrar_datos)
+            .then(function (contenido) {
+                const id_lista = "lista_mejores_planes";
+                parse_datos(contenido, id_lista);
+            })
+            .catch(mostrar_error);
 
     </script>   
 
@@ -135,5 +165,4 @@
 </body>
 
 
-</body>
 </html>
