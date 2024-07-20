@@ -20,7 +20,7 @@ def filtrar_productos_por_marca(modelo, marca):
                 'almacenamiento': producto.almacenamiento if hasattr(producto, 'almacenamiento') else None,
                 'sistema operativo': producto.sistema_operativo if hasattr(producto, 'sistema_operativo') else None,
                 'precio': producto.precio,
-                'plan de financiamiento': producto.financiacion if hasattr(producto, 'financiacion') else None,
+                'plan de financiamiento': producto.financiacion,
                 'descripcion': producto.descripcion,
                 'imagen': producto.imagen_url
             }
@@ -32,9 +32,19 @@ def filtrar_productos_por_marca(modelo, marca):
         return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500
 
 
+
 def filtrar_producto_por_id(id_producto, tabla_perteneciente):
     try:
         producto = tabla_perteneciente.query.get(id_producto)
+        plan = Plan.query.get(producto.financiacion)
+
+        plan_info = {
+            'id': plan.id,
+            'nombre': plan.nombre,
+            'cuotas': plan.cuotas,
+            'intereses': plan.intereses
+        } if plan else None
+        
         producto_informacion = {
             'id': producto.id,
             'marca': producto.marca,
@@ -46,7 +56,7 @@ def filtrar_producto_por_id(id_producto, tabla_perteneciente):
             'bateria': producto.bateria,
             'pantalla': producto.pantalla,
             'precio': producto.precio,
-            'plan de financiamiento': producto.financiacion,
+            'plan de financiamiento':plan_info,
             'descripcion': producto.descripcion,
             'imagen': producto.imagen_url
             }
@@ -58,6 +68,14 @@ def filtrar_producto_por_id(id_producto, tabla_perteneciente):
 def filtrar_notebook_por_id(id_notebook):
     try:
         notebook = Notebook.query.get(id_notebook)
+        plan = Plan.query.get(notebook.financiacion)
+        plan_info = {
+            'id': plan.id,
+            'nombre': plan.nombre,
+            'cuotas': plan.cuotas,
+            'intereses': plan.intereses
+        } if plan else None
+        
         notebook_informacion = {
             'id': notebook.id,
             'marca': notebook.marca,
@@ -70,7 +88,7 @@ def filtrar_notebook_por_id(id_notebook):
             'bateria': notebook.bateria,
             'pantalla': notebook.pantalla,
             'precio': notebook.precio,
-            'plan de financiamiento': notebook.financiacion,
+            'plan de financiamiento': plan_info,
             'descripcion': notebook.descripcion,
             'imagen': notebook.imagen_url
         }
