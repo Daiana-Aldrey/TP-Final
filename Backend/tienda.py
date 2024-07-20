@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS 
 from modelos import db, Celular,Tablet, Notebook, Plan
-from filtrar_productos import filtrar_productos_por_marca, filtrar_producto_por_id, filtrar_notebook_por_id
+from filtrar_productos import filtrar_productos_por_marca, filtrar_producto_por_id, filtrar_notebook_por_id, filtrar_productos_por_precio, filtrar_por_cuotas
 
 SAMSUNG = "Samsung"
 APPLE = "Apple"
@@ -12,8 +12,8 @@ CORS(app) #donde esta el entorno virtual intalar -> pip install flask-cors para 
 
 port = 5000
 #conecto la base de datos //usario_bd:contraseña@localhost:5432/nombre_bd
-#app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:1215308@localhost:5432/tienda_online' 
-app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online'
+app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:1215308@localhost:5432/tienda_online' 
+#app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql+psycopg2://postgres:postgres@localhost:5432/tienda_online'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 
@@ -127,8 +127,57 @@ def producto(id_producto, modelo):
     except Exception as e:
         # Maneja cualquier error inesperado
         return jsonify(f"Error al mostrar el producto: {str(e)}"), 500    
-  
 
+@app.route('/mejores_precios', methods=['GET'])
+def filtrar_mejores_precios():
+    try:
+        precio_min = 0
+        precio_max = 1000000
+
+        productos_filtrados = filtrar_productos_por_precio(precio_min, precio_max)
+
+        if productos_filtrados is None:
+            return jsonify("Error al filtrar productos por precio."), 400
+
+        return jsonify(productos_filtrados), 200
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos filtrados: {str(e)}"), 500
+
+@app.route('/productos_premium', methods=['GET'])
+def filtrar_productos_premium():
+    try:
+        precio_min = 1500000
+        precio_max = 10000000
+
+        productos_filtrados = filtrar_productos_por_precio(precio_min, precio_max)
+
+        if productos_filtrados is None:
+            return jsonify("Error al filtrar productos por precio."), 400
+
+        return jsonify(productos_filtrados), 200
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos filtrados: {str(e)}"), 500
+
+@app.route('/mejores_financiamientos', methods=['GET'])
+def filtrar_por_financiamiento():
+    try:
+        min_cuotas = 9
+        max_cuotas = 12
+
+        productos_filtrados = filtrar_por_cuotas(min_cuotas, max_cuotas)
+
+        if productos_filtrados is None:
+            return jsonify("Error al filtrar productos por cuotas."), 400
+
+        return jsonify(productos_filtrados), 200
+
+    except Exception as e:
+        return jsonify(f"Error al intentar mostrar los productos filtrados: {str(e)}"), 500
+
+  
+"""
 @app.route("/celulares/") #muestra todos los celulares
 def celulares():
     try:
@@ -163,7 +212,7 @@ def celulares():
         return jsonify(listado_de_productos)
 
     except Exception as e:
-        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500        
+        return jsonify(f"Error al intentar mostrar los productos: {str(e)}"), 500   """     
 
         
 

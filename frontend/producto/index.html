@@ -29,6 +29,9 @@
                                 <div id="especificaciones">
                                     <h2>Especificaciones</h2>
                                 </div>
+                                <div id="financiamiento">
+                                    <h2>Plan de financimiento</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -84,14 +87,24 @@
             precio.append(producto.precio)
             const especificaciones = document.getElementById("especificaciones")
             for (let key in producto) {
-                if (key !=='modelo' && key !=='imagen' && key !=='marca' && key !=='descripcion' && key !=='id' && key !=='precio') {
-                    const especificacion = document.createElement('p');
-                    let espect= mayus(key)
-                    especificacion.innerHTML = `<strong>${espect}:</strong> ${producto[key]}`
+                if (key !=='modelo' && key !=='imagen' && key !=='marca' && key !=='descripcion' && key !=='id' && key!== 'plan de financiamiento') {
+                    const especificacion = document.createElement('p')
+                    especificacion.innerHTML = `<strong>${key}:</strong> ${producto[key]}`
                     especificaciones.appendChild(especificacion)
                 }
             }
+            const plan = producto['plan de financiamiento']
+            //console.log(plan.nombre)
+            const financimiento = document.getElementById("financiamiento")
+            const planDiv = document.createElement('div')
+            planDiv.innerHTML = `
+                <p><strong>Nombre:</strong> ${plan.nombre}</p>
+                <p><strong>Cuotas:</strong> ${plan.cuotas}</p>
+                <p><strong>Intereses:</strong> ${plan.intereses}</p>
+            `;
+            financimiento.appendChild(planDiv);
         }
+        
 
         function mostrar_error(error) {
             console.log("Error");
@@ -103,7 +116,6 @@
             .then(mostrar_datos)
             .then(parsear_datos)
             .catch(mostrar_error)
-
     
     </script>
  </body>   
