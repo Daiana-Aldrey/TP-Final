@@ -65,8 +65,10 @@
         if (id=== null || modelo ===null ){
             window.location.href = "/"
         }
-        console.log(id)
-        console.log(modelo) 
+         
+        function mayus(palabra){
+            return palabra.charAt(0).toUpperCase()+palabra.slice(1)
+        }
 
         function mostrar_datos(datos) {
             console.log("datos recibidos", datos)
@@ -89,12 +91,12 @@
             for (let key in producto) {
                 if (key !=='modelo' && key !=='imagen' && key !=='marca' && key !=='descripcion' && key !=='id' && key!=='precio' && key!== 'plan de financiamiento') {
                     const especificacion = document.createElement('p')
-                    especificacion.innerHTML = `<strong>${key}:</strong> ${producto[key]}`
+                    let categoria = mayus(key)
+                    especificacion.innerHTML = `<strong>${categoria}:</strong> ${producto[key]}`
                     especificaciones.appendChild(especificacion)
                 }
             }
             const plan = producto['plan de financiamiento']
-            console.log(plan)
             const financimiento = document.getElementById("financiamiento")
             const planDiv = document.createElement('div')
             planDiv.innerHTML = `
@@ -104,7 +106,6 @@
             `;
             financimiento.appendChild(planDiv);
         }
-        
 
         function mostrar_error(error) {
             console.log("Error");
