@@ -106,3 +106,15 @@ button:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+
+.pago_tarjeta {
+    display: flex;
+    align-items: center;
+}
+.pago_tarjeta label {
+    margin-right: 10px; 
+    flex: 0 0 auto; 
+}
+.pago_tarjeta input {
+    flex: 1; 
+}
