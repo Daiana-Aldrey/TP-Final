@@ -12,23 +12,15 @@
         <nav>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="../vender.html">Vender usado</a></li>
+                <li><a href="vender.html">Vender usado</a></li>
             </ul>
         </nav>
     </header>
 
-    <main id="formulario-compra" style="display: none;">
+
+    <main id="formulario-compra">
         <h2>Formulario de Compra</h2>
         <form id="comprar_form" onsubmit="return mostrarMensaje()">
-            <label for="marca">Marca:</label>
-            <select name="marca" id="marca" required>
-            </select>
-
-            <label for="modelo">Modelo:</label>
-            <select id="modelo" name="modelo" required>
-            </select>
-
-
             <label for="ubicacion">Ubicación de envío:</label>
             <input type="text" id="ubicacion" name="ubicacion" required>
 
@@ -40,11 +32,15 @@
                 <option value="transferencia">Transferencia Bancaria</option>
             </select>
 
+            <label for="tarjeta">Numero de Tarjeta:</label>
+            <input type="number" id="tarjeta" name="tarjeta">
+
             <button type="submit">Comprar</button>
         </form>
 
         <div id="mensaje-exito" style="display: none;">¡Compra realizada con éxito!</div>
     </main>
+
     <script src="../js/scripts.js"></script>
 </body>
 </html>
