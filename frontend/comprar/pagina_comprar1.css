@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+header{
+    font-weight: 400;
+    padding-top: 1em;
+    background-color: #0d6efd;
+    color: white;
+    margin-bottom: 1em;
+}
+h1 {
+    text-align: center;
+    margin-top: 1em;
+}
+.btn-dark{
+    margin: 1em;
+}
+footer p{
+    font-size: 9px;
+    text-align: center;
+}
+.card{
+    margin: 5px;
+}
+.card-title{
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 800;
+}
+.card-body{
+    text-align: center;
+}
+.card-img-top{
+    width: 100%;
+    max-height: 250px;
+}
+.dropdown{
+    margin: 1em;
+}

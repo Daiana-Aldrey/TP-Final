@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra tu dispositivo</title>
+    <link rel="stylesheet" href="../css/pagina_comprar.css">
+</head>
+<body>
+    <header>
+        <h1>Compra tu dispositivo</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="../vender.html">Vender usado</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="formulario-compra" style="display: none;">
+        <h2>Formulario de Compra</h2>
+        <form id="comprar_form" onsubmit="return mostrarMensaje()">
+            <label for="marca">Marca:</label>
+            <select name="marca" id="marca" required>
+            </select>
+
+            <label for="modelo">Modelo:</label>
+            <select id="modelo" name="modelo" required>
+            </select>
+
+
+            <label for="ubicacion">Ubicación de envío:</label>
+            <input type="text" id="ubicacion" name="ubicacion" required>
+
+            <label for="metodo_pago">Método de pago:</label>
+            <select name="metodo_pago" id="metodo_pago" required>
+                <option value="tarjeta_credito">Tarjeta de Crédito</option>
+                <option value="tarjeta_debito">Tarjeta de Débito</option>
+                <option value="paypal">PayPal</option>
+                <option value="transferencia">Transferencia Bancaria</option>
+            </select>
+
+            <button type="submit">Comprar</button>
+        </form>
+
+        <div id="mensaje-exito" style="display: none;">¡Compra realizada con éxito!</div>
+    </main>
+    <script src="../js/scripts.js"></script>
+</body>
+</html>
