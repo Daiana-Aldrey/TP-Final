@@ -45,7 +45,7 @@
                                 <p id="precio">$</p>
                             </div>
                             <div class="col-sm-6 text-end">
-                                <button type="button" class="btn btn-primary btn-lg"> <!--style="background-color: #142850; border-color: #142850;">-->
+                                <button id= "boton_comprar" type="button" class="btn btn-primary btn-lg"> <!--style="background-color: #142850; border-color: #142850;">-->
                                     <i class="bi bi-cart-fill text-white me-2"></i> Comprar
                                 </button>
                             </div>
@@ -157,6 +157,14 @@
             .catch(mostrar_error)
     
 
+
+        function redireccionar_a_form() {
+            window.location.href = 'comprar.html';
+        }
+
+        const boton_comprar = document.getElementById("boton_comprar")
+        boton_comprar.setAttribute('onclick', 'redireccionar_a_form()'); 
+            
         function response_eliminar(datos){
             document.getElementById('mensaje-exito').style.display = 'block';
             window.location.href = "/comprar?nombre=Usado"

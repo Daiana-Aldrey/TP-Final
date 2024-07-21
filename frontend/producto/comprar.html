@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra tu dispositivo</title>
+    <link rel="stylesheet" href="../css/pagina_comprar.css">
+</head>
+<body>
+    <header>
+        <h1>Compra tu dispositivo</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="../vender/index.html">Vender usado</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <main id="formulario-compra">
+        <h2>Formulario de Compra</h2>
+        <form id="comprar_form" onsubmit="return mostrarMensaje()">
+            <label for="ubicacion">Ubicación de envío:</label>
+            <input type="text" id="ubicacion" name="ubicacion" required>
+
+            <label for="metodo_pago">Método de pago:</label>
+            <select name="metodo_pago" id="metodo_pago" required>
+                <option value="tarjeta_credito">Tarjeta de Crédito</option>
+                <option value="tarjeta_debito">Tarjeta de Débito</option>
+                <option value="paypal">PayPal</option>
+                <option value="transferencia">Transferencia Bancaria</option>
+            </select>
+            <br></br>
+            <div class="pago_tarjeta">
+                <label for="numero_tarjeta">Numero de Tarjeta:</label>
+                <input type="text" id="numero_tarjeta" name="numero_tarjeta" placeholder="Ingrese el numero de la tarjeta">
+                     
+                <label for="vencimiento">Fecha de vencimiento</label>
+                <input type="text" id="vencimiento" name=" vencimiento" placeholder="DD/MM/AAAA">
+           
+                <label for="seguridad">Codigo de seguridad</label>
+                <input type="text" id="seguridad" name=" seguridad" placeholder="CVV">
+            </div>
+    
+            <label for="comprobante">Inserta tu comprobante de pago de Paypal o Mercado Pago:</label>
+            <input type="text" id="comprobante" name="comprobante" placeholder="Ingrese el link de tu comprobante de pago">    
+            
+
+            <button type="submit">Comprar</button>
+        </form>
+
+        <div id="mensaje-exito" style="display: none;">¡Compra realizada con éxito!</div>
+    </main>
+
+    <script src="../js/scripts.js"></script>
+</body>
+</html>
