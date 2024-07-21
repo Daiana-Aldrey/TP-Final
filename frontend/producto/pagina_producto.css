@@ -18,4 +18,7 @@ img{
     font-size: xx-large;
     margin: 0;
 }
-
+#botones{
+    margin-top: 1em;
+    width: fit-content;
+}

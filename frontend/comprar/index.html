@@ -106,6 +106,10 @@
 
         let boton = document.getElementById("boton");
 
+        if (tabla === 'Usado'){
+            boton.remove();
+        }
+
         if (marca === null) {
             marca = '';
         }else{

@@ -54,6 +54,8 @@
                 </div>
             </div>
         </div>
+        <div class="row" id="botones">
+        </div>
     </div>
 
     <script>
@@ -110,7 +112,11 @@
 
             const precio = document.getElementById("precio")
             precio.append(producto.precio)
+
             const especificaciones = document.getElementById("especificaciones")
+            const condicion = producto.condición
+            const financimiento = document.getElementById("financiamiento")
+
             for (let key in producto) {
                 if (key !=='modelo' && key !=='imagen' && key !=='marca' && key !=='descripcion' && key !=='id' && key!=='precio' && key!== 'plan de financiamiento') {
                     const especificacion = document.createElement('p')
@@ -118,21 +124,21 @@
                     especificaciones.appendChild(especificacion)
                 }
             }
-            const plan = producto['plan de financiamiento']
-            console.log(plan)
-            const financimiento = document.getElementById("financiamiento")
-            const planDiv = document.createElement('div')
-            planDiv.innerHTML = `
-                <p><strong>Nombre:</strong> ${plan.nombre}</p>
-                <p><strong>Cuotas:</strong> ${plan.cuotas}</p>
-                <p><strong>Intereses:</strong> ${plan.intereses}</p>
-            `;
-            financimiento.appendChild(planDiv);
-        
-        
-            const condicion = producto.condición
+            console.log(condicion)
             if (condicion === 'Usado'){
-                botones()
+                especificaciones.remove();
+                financimiento.remove();
+                botones();
+            }else{
+                const plan = producto['plan de financiamiento']
+                console.log(plan)
+                const planDiv = document.createElement('div')
+                planDiv.innerHTML = `
+                    <p><strong>Nombre:</strong> ${plan.nombre}</p>
+                    <p><strong>Cuotas:</strong> ${plan.cuotas}</p>
+                    <p><strong>Intereses:</strong> ${plan.intereses}</p>
+                `;
+                financimiento.appendChild(planDiv);
             }
         }
 
