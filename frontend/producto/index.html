@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Vender</title>
     <link rel="stylesheet" href="pagina_producto.css">
-    <title>nombre nuestra empresa</title>
  </head>
  
 
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <div id="mensaje-exito" style="display: none;">¡Producto eliminado!</div>
+
 
     <div class="container mt-4">
         <div class="row">
@@ -52,11 +54,36 @@
                 </div>
             </div>
         </div>
+        <div class="row" id="botones">
+        </div>
     </div>
 
     <script>
         function mayus(palabra){
             return palabra.charAt(0).toUpperCase()+palabra.slice(1)
+        }
+        function botones(){
+            const row = document.getElementById("botones");
+
+            const grid_eliminar = document.createElement("div");
+            grid_eliminar.setAttribute("class", "col-sm-6");
+
+            const grid_editar = document.createElement("div");
+            grid_editar.setAttribute("class", "col-sm-6");
+
+            const btn_eliminar = document.createElement("button");
+            btn_eliminar.innerText = "Eliminar"
+            btn_eliminar.setAttribute("class", "btn btn-danger btn-lg btn-block");
+            btn_eliminar.setAttribute("onclick", "eliminar_producto()")
+
+            const btn_editar = document.createElement("a");
+            btn_editar.innerText = "Editar"
+            btn_editar.setAttribute("class", "btn btn-warning btn-lg btn-block");
+            btn_editar.setAttribute("href", `http://localhost:8000/producto/editar?id=${id}&modelo=${modelo}`)
+
+            grid_eliminar.append(btn_eliminar)
+            grid_editar.append(btn_editar)
+            row.append(grid_editar, grid_eliminar)
         }
         const parametros = new URLSearchParams(window.location.search)  /// trae todos los parametros de la url
         const id = parametros.get("id")
@@ -87,7 +114,11 @@
 
             const precio = document.getElementById("precio")
             precio.append(producto.precio)
+
             const especificaciones = document.getElementById("especificaciones")
+            const condicion = producto.condición
+            const financimiento = document.getElementById("financiamiento")
+
             for (let key in producto) {
                 if (key !=='modelo' && key !=='imagen' && key !=='marca' && key !=='descripcion' && key !=='id' && key!=='precio' && key!== 'plan de financiamiento') {
                     const especificacion = document.createElement('p')
@@ -96,15 +127,22 @@
                     especificaciones.appendChild(especificacion)
                 }
             }
-            const plan = producto['plan de financiamiento']
-            const financimiento = document.getElementById("financiamiento")
-            const planDiv = document.createElement('div')
-            planDiv.innerHTML = `
-                <p><strong>Nombre:</strong> ${plan.nombre}</p>
-                <p><strong>Cuotas:</strong> ${plan.cuotas}</p>
-                <p><strong>Intereses:</strong> ${plan.intereses}</p>
-            `;
-            financimiento.appendChild(planDiv);
+
+            if (condicion === 'Usado'){
+                especificaciones.remove();
+                financimiento.remove();
+                botones();
+            }else{
+                const plan = producto['plan de financiamiento']
+                const financimiento = document.getElementById("financiamiento")
+                const planDiv = document.createElement('div')
+                planDiv.innerHTML = `
+                    <p><strong>Nombre:</strong> ${plan.nombre}</p>
+                    <p><strong>Cuotas:</strong> ${plan.cuotas}</p>
+                    <p><strong>Intereses:</strong> ${plan.intereses}</p>
+                `;
+                financimiento.appendChild(planDiv);
+            }
         }
 
         function mostrar_error(error) {
@@ -118,5 +156,21 @@
             .then(parsear_datos)
             .catch(mostrar_error)
     
+
+        function response_eliminar(datos){
+            document.getElementById('mensaje-exito').style.display = 'block';
+            window.location.href = "/comprar?nombre=Usado"
+        }
+        
+        function eliminar_producto(){
+         const confirmar = confirm("¿Desea eliminar este producto?");
+         if (!confirmar){
+            return;
+         }
+         fetch(`http://localhost:5000/productos/${id}`, {method: "DELETE"} )
+            .then((res) => res.json)
+            .then(response_eliminar)
+            .catch(mostrar_error)
+        }
     </script>
- </body>   
+ </body>  
